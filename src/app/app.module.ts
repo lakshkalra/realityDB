@@ -7,12 +7,14 @@ import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginComponent } from './pages/login/login.component';
+import { LandingComponent } from './pages/landing/landing.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    LoginComponent
+    LoginComponent,
+    LandingComponent
   ],
   imports: [
     BrowserModule,
