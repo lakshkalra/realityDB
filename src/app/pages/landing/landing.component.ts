@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LandingComponent implements OnInit {
   constructor() { }
+  closePopup()
+  {
+    document.getElementById('popup1').style.display="none";
+  }
+  openPopup()
+  {
+    document.getElementById('popup1').style.display="block";
+  }
 
   ngOnInit(): void {
 

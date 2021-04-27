@@ -15,12 +15,12 @@
             <h1 class="h1-responsive font-weight-bold mt-sm-5">Perfect platform for Angel Investing & Startup Fundraising</h1>
             <hr class="hr-light">
             <h6 class="mb-4">The purpose of this project is to support budding startup ventures and provide a platform for Investor Investors to invest in a project and also for job seekers to help getting a job   .</h6>
-            <a mdbBtn color="white" mdbWavesEffect>Sign In</a>
+            <a mdbBtn color="white" (click)="openPopup()"  mdbWavesEffect>Sign In</a>
           </div>
           <!--Grid column-->
           <!--Grid column-->
           <div class="col-md-6 col-xl-5 mt-xl-5 wow fadeInRight" data-wow-delay="0.3s">
-            <!-- <img src="../../../assets/images/undraw_Success_factors_re_ce93(1).png" alt="" class="img-fluid"> -->
+            <app-signup></app-signup>
           </div>
           <!--Grid column-->
         </div>
@@ -34,3 +34,9 @@
 </header>
 <!-- Main navigation -->
 
+<div id="popup1" class="overlay">
+  <div class="popup">
+    <a class="close" (click)="closePopup()">&times;</a>
+    <app-login></app-login>
+  </div>
+</div>
