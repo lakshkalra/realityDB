@@ -1,17 +1,25 @@
                 
-<form class="text-center border border-light p-5">
+<form  #userlogin="ngForm" class="text-center border border-light p-5">
 
   <p class="h4 mb-4">Sign in</p>
 
   <!-- Email -->
   <div class="md-form">
-      <input mdbInput type="text" id="form1" class="form-control">
-      <label for="form1" class="">Username</label>
+      <input mdbInput required type="text" #email="ngModel" id="form1" class.is-invalid="email.invalid && email.touched" name="email" ngModel class="form-control">
+      <label for="form1" class="">Email</label>
+      <div *ngIf="email.errors && (email.invalid && email.touched)" >
+        <small class="text-danger" *ngIf="email.errors.required">This Field is required</small>
+      </div>       
   </div>  
+
   <!-- Password -->
   <div class="md-form">
-      <input mdbInput type="text" id="form1" class="form-control">
+      <input mdbInput required type="password" #password="ngModel" id="form1" class.is-invalid="password.invalid && password.touched" name="password" ngModel class="form-control">
       <label for="form1" class="">Password</label>
+      <div *ngIf="password.errors && (password.invalid && password.touched)" >
+        <small class="text-danger" *ngIf="password.errors.required">This Field is required</small>
+      </div>
+
   </div>  
 
   <div>
@@ -22,6 +30,6 @@
   </div>
 
   <!-- Sign in button -->
-  <button type="button" routerLink='/profile' mdbBtn color="primary" mdbWavesEffect>Sign In</button>  
+  <button type="button" [disabled]="userlogin.form.invalid" mdbBtn color="primary" mdbWavesEffect>Sign In</button>  
 
 </form>
