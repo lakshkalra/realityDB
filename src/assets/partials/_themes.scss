@@ -2,7 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Poppins&display=swap');
 
 $bg-color:#f2f3f8;
-$navbar-bg-color : #242939;
+$navbar-bg-color : #7f8bb3;
 $navbar-color:#6e7899;
 $sidebar-bg-color:#fff;
 $sidebar-color:#3d4465;
@@ -14,13 +14,12 @@ body {
   font-size: .9rem;
 }
 
-
 .wrapper.default-theme {
 
   background: $bg-color;
 
   nav.navbar {
-    background: $navbar-bg-color;
+    background-color: #fff;
     border-color: rgba($navbar-color, .3);
 
     .navbar-brand {

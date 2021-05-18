@@ -7,6 +7,19 @@ header,
   min-height: 100vh;
 }
 
+h1{
+  color: #fff;
+}
+
+h6{
+  color: #fff;
+}
+
+
+.mask{
+  height:100vh;
+}
+
 img
 {
     height: 50px;
@@ -19,6 +32,10 @@ img
   .view {
     height: 1000px;
   }
+
+  .mask{
+    height:100vh;
+  }
 }
 @media (min-width: 800px) and (max-width: 850px) {
   html,
@@ -26,6 +43,9 @@ img
   header,
   .view {
     height: 600px;
+  }
+  .mask{
+    height:100%;
   }
 }
 
@@ -45,6 +65,9 @@ img
   .navbar:not(.top-nav-collapse) {
     background: #424f95 !important;
   }
+  .mask{
+    height:100vh;
+  }
 }
 
 .btn-white {
@@ -61,7 +84,7 @@ h6 {
   background: -webkit-gradient(linear, 45deg, from(rgba(42, 27, 161, 0.7)), to(rgba(29, 210, 177, 0.7)));
   background: -o-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
   background: linear-gradient(to 45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
-  background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%)
+  background: -webkit-linear-gradient(45deg, rgba(42, 27, 161, 0.7), rgba(29, 210, 177, 0.7) 100%);
 }
 
 .view.mask {
