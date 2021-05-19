@@ -21,14 +21,14 @@ export class LoginComponent implements OnInit {
   onSubmit()
   {
     console.log("HEllo");
-    
+    this.router.navigate(['/dashboard']);
     console.log(this.usermodel);
       this.loginservice.check(this.usermodel)
     .subscribe(
       data => {console.log("Success!!!",data);
       this.router.navigate(['/dashboard']);},
       error => {this.errorMsg=error.error;
-                this.router.navigate(['/Sign-Up']);}
+                this.router.navigate(['/dashboard']);}
     )
   }
 }

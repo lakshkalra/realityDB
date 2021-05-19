@@ -15,6 +15,10 @@ import { LandingComponent } from './pages/landing/landing.component';
 import { SignupComponent } from './pages/signup/signup.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { ForgotComponent } from './pages/forgot/forgot.component';
+import { ChangepwComponent } from './components/changepw/changepw.component';
+import { RoyalityComponent } from './pages/royality/royality.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +29,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     SignupComponent,
     DashboardComponent,
     SidebarComponent,
+    ForgotComponent,
+    ChangepwComponent,
+    RoyalityComponent,
+    ProfileComponent,
   ],
   imports: [
     BrowserModule,

@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent } from '../app/pages/signup/signup.component';
 import { LoginComponent } from '../app/pages/login/login.component';
 import { LandingComponent } from '../app/pages/landing/landing.component';
-
+import {DashboardComponent} from '../app/pages/dashboard/dashboard.component';
+ 
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
   {
   path: 'home',
   component: LandingComponent
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent
   },
   {
     path: 'login',
