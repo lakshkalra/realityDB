@@ -10,7 +10,7 @@ import { throwError} from 'rxjs';
 })
 export class LoginService {
 
-  loginurl='localhost:8081/user/login';
+  loginurl='http://localhost:8081/user/login';
   constructor(private http: HttpClient) { }
   check(login: Login)
   {

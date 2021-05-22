@@ -23,7 +23,7 @@
           </div>       
         </div>
        <div class="md-form md-outline">
-        <input mdbInput required pattern="^\d[0-9]{9}$" type="text" #phone="ngModel" id="form1" class.is-invalid="phone.invalid && phone.touched" name="phone" [(ngModel)]="usermodel.phone" class="form-control">
+        <input mdbInput required pattern="^\d[0-9]{9}$" type="text" #phone="ngModel" id="form1" class.is-invalid="phone.invalid && phone.touched" name="phone" [(ngModel)]="usermodel.contact" class="form-control">
         <label for="form1">Phone Number</label>
         <div *ngIf="phone.errors && (phone.invalid && phone.touched)" >
           <small class="text-danger" *ngIf="phone.errors.required">Phone number is required</small>
