@@ -1,11 +1,13 @@
   <form [formGroup]="userTable">
       <table class="table table-border" [ngClass]="{'table-dark': mode}">
         <thead class="text-nowrap">
-          <th>Name <span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Email<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Date Of Birth<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Blood Group<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Mobile Number</th>
+          <th>Full Name<span class="ui-column-resizer" dragableColumn> </span></th>
+          <th>Book Name<span class="ui-column-resizer" dragableColumn> </span></th>
+          <th>ISBN<span class="ui-column-resizer" dragableColumn> </span></th>
+          <th>Sales<span class="ui-column-resizer" dragableColumn> </span></th>
+          <th>Royality<span class="ui-column-resizer" dragableColumn> </span></th>
+          <th>Amount</th>
+          <th>Amount Withdrawn</th>
           <th></th>
         </thead>
         <tbody>
@@ -18,29 +20,32 @@
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput type="tetx" formControlName="email">
+                  <input matInput type="text" formControlName="book_name">
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput matInput [matDatepicker]="picker" formControlName="dob">
-                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                  <mat-datepicker #picker></mat-datepicker>
+                  <input matInput type="text" formControlName="isbn">
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <mat-select formControlName="bloodGroup">
-                    <mat-option value="O+">O</mat-option>
-                    <mat-option value="A">A</mat-option>
-                    <mat-option value="B">B</mat-option>
-                    <mat-option value="AB">AB</mat-option>
-                  </mat-select>
+                  <input matInput matInput formControlName="sales">
                 </mat-form-field>
               </td>
               <td>
                 <mat-form-field>
-                  <input matInput type="text" formControlName="mobNumber">
+                  <input matInput matInput formControlName="royality">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput type="text" formControlName="amount">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input matInput type="text" formControlName="withdrawal_amount">
                 </mat-form-field>
               </td>
               <td>
@@ -53,16 +58,22 @@
                 {{group.get('name').value}}
               </td>
               <td>
-                {{group.get('email').value}}
+                {{group.get('book_name').value}}
               </td>
               <td>
-                  {{group.get('email').value}}
+                {{group.get('isbn').value}}
               </td>
               <td>
-                  {{group.get('bloodGroup').value}}
+                  {{group.get('sales').value}}
               </td>
               <td>
-                {{group.get('mobNumber').value}}
+                  {{group.get('royality').value}}
+              </td>
+              <td>
+                {{group.get('amount').value}}
+              </td>
+              <td>
+                {{group.get('withdrawal_amount').value}}
               </td>
               <td>
                 <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>

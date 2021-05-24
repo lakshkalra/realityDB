@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
   onSubmit()
   {
     console.log("HEllo");
-    this.router.navigate(['/dashboard']);
     console.log(this.usermodel);
       this.loginservice.check(this.usermodel)
     .subscribe(

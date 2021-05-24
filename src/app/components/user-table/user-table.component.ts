@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { TablechangeService } from 'src/app/services/tablechange.service';
 
 @Component({
   selector: 'app-user-table',
@@ -12,7 +13,7 @@ export class UserTableComponent implements OnInit {
   control: FormArray;
   mode: boolean;
   touchedRows: any;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,private tc: TablechangeService) { }
 
   ngOnInit(): void {
     this.touchedRows = [];
@@ -21,6 +22,7 @@ export class UserTableComponent implements OnInit {
     });
     this.addRow();
   }
+  errorMsg='';
   
   ngAfterOnInit() {
     this.control = this.userTable.get('tableRows') as FormArray;
@@ -29,10 +31,12 @@ export class UserTableComponent implements OnInit {
   initiateForm(): FormGroup {
     return this.fb.group({
       name: ['', Validators.required],
-      email: ['', [Validators.email, Validators.required]],
-      dob: ['', [Validators.required]],
-      bloodGroup: [''],
-      mobNumber: ['', [Validators.required, Validators.maxLength(10)]],
+      book_name: ['', [Validators.required]],
+      isbn: ['', [Validators.required]],
+      sales: ['', [Validators.required]],
+      royality: ['',Validators.required],
+      amount: ['', [Validators.required, Validators.maxLength(10)]],
+      withdrawal_amount: ['', [Validators.required, Validators.maxLength(5)]],
       isEditable: [true]
     });
   }
@@ -53,6 +57,14 @@ export class UserTableComponent implements OnInit {
 
   doneRow(group: FormGroup) {
     group.get('isEditable').setValue(false);
+    console.log(this.userTable.value);
+    this.tc.check(this.userTable.value)
+    .subscribe(
+      data => {console.log("Success!!!",data);
+      },
+      error => {this.errorMsg=error.error;}
+    )
+    
   }
 
   saveUserDetails() {
