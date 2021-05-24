@@ -7,6 +7,7 @@ const cors = require("cors");
 
 // IMPORT ROUTES
 const User_Route = require("./routes/user_auth");
+const authority = require("./routes/authority");
 
 dotenv.config();
 
@@ -26,6 +27,7 @@ app.use(cors());
 
 // ROUTE MIDDLEWARE
 app.use("/user", User_Route)
+app.use("/", authority)
 
 
 //PORT

@@ -4,16 +4,19 @@ const router = require("express").Router();
 
 //ADDING NEW CUSTOMER
 router.post("/auth/add", async (req, res) => {
-    // console.log(req.body)
 
-    const { name, book_name, isbn, sales, royalty, amount, withdrawal_amount, date } = req.body
+    b = req.body
+    console.log(b.tableRows[0])
+
+
+    const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = b.tableRows[0]
 
     const customer = new Customer({
         name,
         book_name,
         isbn,
         sales,
-        royalty,
+        royality,
         amount,
         withdrawal_amount
     })

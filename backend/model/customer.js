@@ -17,7 +17,7 @@ const customerSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    royalty: {
+    royality: {
         type: Number,
         required: true,
     },
