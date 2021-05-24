@@ -16,7 +16,8 @@ mongoose.connect(
     process.env.MONGODB_URL || "mongodb+srv://publishing123:publishing123@cluster0.yctuv.mongodb.net/test",
     {
         useNewUrlParser: true,
-        useUnifiedTopology: true
+        useUnifiedTopology: true,
+        useFindAndModify: false
     },
     () => console.log("connected to db")
 )
