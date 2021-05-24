@@ -21,6 +21,13 @@ export class UserTableComponent implements OnInit {
       tableRows: this.fb.array([])
     });
     this.addRow();
+    this.tc.gettinginfo().subscribe(
+      data=> {
+        console.log("Success!",data);},
+      error => {
+          console.log("Error!",error);       
+        }  
+    )
   }
   errorMsg='';
   
@@ -32,11 +39,11 @@ export class UserTableComponent implements OnInit {
     return this.fb.group({
       name: ['', Validators.required],
       book_name: ['', [Validators.required]],
-      isbn: ['', [Validators.required]],
+      isbn: ['', [Validators.required, Validators.minLength(12)]],
       sales: ['', [Validators.required]],
       royality: ['',Validators.required],
-      amount: ['', [Validators.required, Validators.maxLength(10)]],
-      withdrawal_amount: ['', [Validators.required, Validators.maxLength(5)]],
+      amount: ['', [Validators.required]],
+      withdrawal_amount: ['', [Validators.required]],
       isEditable: [true]
     });
   }

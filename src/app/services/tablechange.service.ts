@@ -8,6 +8,7 @@ import { throwError} from 'rxjs';
 })
 export class TablechangeService {
   url='http://localhost:8081/auth/add';
+  urlget='http://localhost:8081/auth/info';
   constructor(private http: HttpClient) { }
   check(tablechange)
   {
@@ -15,6 +16,16 @@ export class TablechangeService {
     .pipe(catchError(this.errorHandler))
   } 
   errorHandler(error: HttpErrorResponse)
+  {
+    return throwError(error);
+  }
+
+  gettinginfo()
+  {
+    return this.http.get<any>(this.urlget)
+    .pipe(catchError(this.errorHandle))
+  } 
+  errorHandle(error: HttpErrorResponse)
   {
     return throwError(error);
   }
