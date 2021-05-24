@@ -9,18 +9,10 @@ router.post("/auth/add", async (req, res) => {
 
     b = req.body
 
-    const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = b
+    const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = b.tableRows[0]
 
     const isbn_exist = await Customer.findOne({ isbn })
 
-    // if (isbn_exist) {
-    //     console.log(isbn, sales)
-    //     await Customer.findOneAndUpdate(isbn, { sales: sales })
-    //     return res.status(200).json({ msg: "updated successfully" })
-
-    // }
-
-    // else {
     if (!isbn_exist) {
         try {
             const customer = new Customer({
@@ -37,8 +29,6 @@ router.post("/auth/add", async (req, res) => {
                 const saved_Customer = await customer.save();
                 res.json({ customer })
             } catch (err) {
-                //TODO: delete console logs
-                console.log(err)
                 res.status(400).send(err);
             }
         } catch (err) {
@@ -79,7 +69,6 @@ router.post("/auth/edit", async (req, res) => {
     else amount = req.body.amount
 
     console.log(royality, sales, amount)
-    // const { isbn, sales, royality, amount } = req.body
 
     cus = await Customer.findOne({ isbn })
 
