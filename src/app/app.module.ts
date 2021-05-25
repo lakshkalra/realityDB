@@ -28,6 +28,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthoritydashboardComponent } from './pages/authoritydashboard/authoritydashboard.component';
 import { DragableColumnDirective } from './dragable-column.directive';
 import { UserTableComponent } from './components/user-table/user-table.component';
+import { AddpageComponent } from './pages/addpage/addpage.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { UserTableComponent } from './components/user-table/user-table.component
     AuthoritydashboardComponent,
     DragableColumnDirective,
     UserTableComponent,
+    AddpageComponent,
   ],
   imports: [
     BrowserModule,

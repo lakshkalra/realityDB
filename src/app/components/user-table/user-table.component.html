@@ -1,94 +1,40 @@
-  <form [formGroup]="userTable">
-      <table class="table table-border" [ngClass]="{'table-dark': mode}">
-        <thead class="text-nowrap">
-          <th>Full Name<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Book Name<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>ISBN<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Sales<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Royality<span class="ui-column-resizer" dragableColumn> </span></th>
-          <th>Amount</th>
-          <th>Amount Withdrawn</th>
-          <th></th>
-        </thead>
-        <tbody>
-          <ng-container formArrayName="tableRows" *ngFor="let group of getFormControls.controls ; let i=index">
-            <tr *ngIf="group.get('isEditable').value" [formGroupName]="i">
-              <td>
-                <mat-form-field>
-                  <input matInput type="text" formControlName="name">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput type="text" formControlName="book_name">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput type="text" formControlName="isbn">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput matInput formControlName="sales">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput matInput formControlName="royality">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput type="text" formControlName="amount">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-form-field>
-                  <input matInput type="text" formControlName="withdrawal_amount">
-                </mat-form-field>
-              </td>
-              <td>
-                <mat-icon class="delete" (click)="deleteRow(i)">delete_forever</mat-icon>
-                <mat-icon class="done" (click)="doneRow(group)">done</mat-icon>
-              </td>
-            </tr>
-            <tr *ngIf="!group.get('isEditable').value" >
-              <td>
-                {{group.get('name').value}}
-              </td>
-              <td>
-                {{group.get('book_name').value}}
-              </td>
-              <td>
-                {{group.get('isbn').value}}
-              </td>
-              <td>
-                  {{group.get('sales').value}}
-              </td>
-              <td>
-                  {{group.get('royality').value}}
-              </td>
-              <td>
-                {{group.get('amount').value}}
-              </td>
-              <td>
-                {{group.get('withdrawal_amount').value}}
-              </td>
-              <td>
-                <mat-icon class="edit" (click)="editRow(group)">edit</mat-icon>
-              </td>
-            </tr>
-          </ng-container>
-        </tbody>
-      </table>
-      <div class="action-container">
-        <button mat-raised-button type="submit" (click)="addRow()">Add row</button>
-        <button mat-raised-button [disabled]="userTable.invalid" type="submit" (click)="submitForm()">Submit</button>
-      </div>
-    </form>
-    <div class="output">
-      <p>Form Data:  {{userTable.value | json}}</p>
-        <p>Is Valid: {{userTable.valid}}</p>
-    </div>
+<table class="table ">
+  <thead>
+    <tr>
+      <th style="width: 20%;">Author Name</th>
+      <th style="width: 20%;">Book Name</th>
+      <th style="width:20%;">ISBN</th>
+      <th style="width:10%;">Sales</th>
+      <th  style="width:5%;">Royality</th>
+      <th style="width:5%;">Amount</th>
+      <th  style="width:5%;">Withdrawal Amount</th>
+    </tr>
+  </thead>
+  <tbody class="no-border-x">
+    <tr  *ngFor="let friends of tabledata">
+      <td>
+        {{friends.name}}
+      </td>
+      <td>
+        {{friends.book_name}}
+      </td>
+      <td>
+        {{friends.isbn}}
+      </td>
+      <td>
+          {{friends.sales}}
+      </td>
+      <td>
+          {{friends.royality}}
+      </td>
+      <td>
+        {{friends.amount}}
+      </td>
+      <td>
+        {{friends.withdrawal_amount}}
+      </td>
+    </tr>  
+  </tbody>
+</table>
+
 
