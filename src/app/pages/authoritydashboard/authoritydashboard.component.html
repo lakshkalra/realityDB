@@ -30,22 +30,35 @@
                   <h6>Changes</h6>
                 </div>
                 <div class="card-body">
-                  <form #change="ngForm">
+                  <form [formGroup]="changeuserForm" #change="ngForm">
                     <div class="md-form md-outline">
-                      <input mdbInput required type="tel" id="form1" name="isbn" class="form-control">
+                      <input mdbInput required [class.is-invalid]="changeuserForm.get('isbn').invalid && changeuserForm.get('isbn').touched" formControlName="isbn" type="tel" id="form1" name="isbn" class="form-control">
                       <label for="form1" class="">ISBN</label>
+                      <div *ngIf="changeuserForm.get('isbn').invalid && changeuserForm.get('isbn').touched" >
+                        <small class="text-danger" *ngIf="changeuserForm.get('isbn').errors?.required">This Field is required</small>
+                        <small class="text-danger" *ngIf="changeuserForm.get('isbn').errors.pattern">Length must be 12 and numeric</small>
+                      </div>                   
                     </div>  
                     <div class="md-form md-outline">
-                      <input mdbInput required type="tel" id="form1" name="sales" class="form-control">
+                      <input mdbInput type="tel" [class.is-invalid]="changeuserForm.get('sales').invalid && changeuserForm.get('sales').touched" formControlName="sales" id="form1" name="sales" class="form-control">
                       <label for="form1" class="">Sales</label>
+                      <div *ngIf="changeuserForm.get('sales').invalid && changeuserForm.get('sales').touched" >
+                        <small class="text-danger" *ngIf="changeuserForm.get('sales').errors.pattern">Field must be numeric</small>
+                      </div>                   
                     </div>
                     <div class="md-form md-outline">
-                      <input mdbInput required type="tel" id="form1" name="royality" class="form-control">
+                      <input mdbInput type="tel" [class.is-invalid]="changeuserForm.get('royality').invalid && changeuserForm.get('royality').touched" formControlName="royality" id="form1" name="royality" class="form-control">
                       <label for="form1" class="">Royality</label>
+                      <div *ngIf="changeuserForm.get('royality').invalid && changeuserForm.get('royality').touched" >
+                        <small class="text-danger" *ngIf="changeuserForm.get('royality').errors.pattern">Field must be numeric</small>
+                      </div>                   
                     </div>
                     <div class="md-form md-outline">
-                      <input mdbInput required type="tel" id="form1" name="amount"class="form-control">
+                      <input [class.is-invalid]="changeuserForm.get('amount').invalid && changeuserForm.get('amount').touched" formControlName="amount" mdbInput type="tel" id="form1" name="amount"class="form-control">
                       <label for="form1" class="">Amount</label>
+                      <div *ngIf="changeuserForm.get('amount').invalid && changeuserForm.get('amount').touched" >
+                        <small class="text-danger" *ngIf="changeuserForm.get('amount').errors.pattern">Field must be numeric</small>
+                      </div>                   
                     </div>
                     <div class="form-group text-center">
                       <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  

@@ -10,13 +10,7 @@ import { AppService } from 'src/app/services/app.service';
 })
 export class AuthoritydashboardComponent implements OnInit {
 
-  bookings="";
-  totalPrice="";
-  buses='';
-  users="";
-
-
-  constructor(private appService: AppService) {}
+  constructor(private appService: AppService,private fb: FormBuilder) {}
   getClasses() {
     const classes = {
       'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
@@ -28,6 +22,12 @@ export class AuthoritydashboardComponent implements OnInit {
     this.appService.toggleSidebar();
   }
 
+  changeuserForm = this.fb.group({
+    isbn:['',[Validators.required,Validators.pattern("^[0-9]{12}$")]],
+    sales:['',[Validators.pattern("^[0-9]*$")]],
+    royality: ['',[Validators.pattern("^[0-9]*$")]],
+    amount:['',[Validators.pattern("^[0-9]*$")]],
+  });
   ngOnInit() {
 
 

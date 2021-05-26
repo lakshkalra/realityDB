@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-
+import { AppService } from 'src/app/services/app.service';
+import {FormBuilder,Validators} from '@angular/forms';
+import { TablechangeService } from '../../services/tablechange.service';
 @Component({
   selector: 'app-addpage',
   templateUrl: './addpage.component.html',
@@ -7,9 +9,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddpageComponent implements OnInit {
 
-  constructor() { }
-
+  constructor(private appService: AppService,private fb: FormBuilder,private tc: TablechangeService) {}
+  getClasses() {
+    const classes = {
+      'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
+      'toggeled-sidebar': this.appService.getSidebarStat().isSidebarToggeled
+    }
+    return classes;
+  }
+  toggleSidebar() {
+    this.appService.toggleSidebar();
+  }
+  errorMsg="";
+  enrolluserForm = this.fb.group({
+    name: ['',Validators.required],
+    book_name:['',Validators.required],
+    isbn:['',[Validators.required,Validators.pattern("^[0-9]{12}$")]],
+    sales:['',[Validators.required,Validators.pattern("^[0-9]*$")]],
+    royality: ['',[Validators.required,Validators.pattern("^[0-9]*$")]],
+    amount:['',[Validators.required,Validators.pattern("^[0-9]*$")]],
+    withdrawal_amount:['',[Validators.required,Validators.pattern("^[0-9]*$")]]
+  });
   ngOnInit(): void {
+  }
+  onSubmit()
+  {
+    console.log(this.enrolluserForm.value);
+    
+    this.tc.check(this.enrolluserForm.value)
+    .subscribe(
+      data => {console.log("Success!!!",data);},
+      error => {this.errorMsg=error.error;
+        console.log(this.errorMsg);}
+    )
   }
 
 }

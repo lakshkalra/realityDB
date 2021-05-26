@@ -1,1 +1,94 @@
-<p>addpage works!</p>
+<div class="wrapper default-theme" [ngClass]="getClasses()">
+    <app-navbar></app-navbar>
+    <main>
+      <app-sidebar></app-sidebar>
+      <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+        <div>
+          <h4 class="mb-4" style="color: #fff;"></h4>
+  
+          <div class="row d-flex justify-content-center align-items-center">
+            <div class="col-md-8 mb-4 ">
+                <form [formGroup]='enrolluserForm' (ngSubmit)="onSubmit()" class="border border-light p-5 z-depth-5 text-center" style="background: #fff;">
+
+                    <p class="h4 mb-4 text-center">Enrolling New User</p>
+        
+          <!-- Email -->
+          <div class="md-form">
+              <input mdbInput [class.is-invalid]="enrolluserForm.get('name').invalid && enrolluserForm.get('name').touched" required formControlName="name" type="text" id="form1" name="name" class="form-control">
+              <label for="form1" class="">Author Name</label>
+              <div *ngIf="enrolluserForm.get('name').invalid && enrolluserForm.get('name').touched" >
+                <small class="text-danger" *ngIf="enrolluserForm.get('name').errors?.required">This Field is required</small>
+              </div>               
+          </div>  
+        
+          <!-- Password -->
+          <div class="md-form">
+              <input mdbInput [class.is-invalid]="enrolluserForm.get('book_name').invalid && enrolluserForm.get('book_name').touched" required formControlName="book_name" type="text" id="form1" name="book_name" class="form-control">
+              <label for="form1" class="">Book Name</label>
+              <div *ngIf="enrolluserForm.get('book_name').invalid && enrolluserForm.get('book_name').touched" >
+                <small class="text-danger" *ngIf="enrolluserForm.get('book_name').errors?.required">This Field is required</small>
+              </div>                 
+          </div>  
+
+          <div class="md-form">
+            <input mdbInput [class.is-invalid]="enrolluserForm.get('isbn').invalid && enrolluserForm.get('isbn').touched" required formControlName="isbn" type="tel" id="form1" name="isbn" class="form-control">
+            <label for="form1" class="">ISBN</label>
+            <div *ngIf="enrolluserForm.get('isbn').invalid && enrolluserForm.get('isbn').touched" >
+              <small class="text-danger" *ngIf="enrolluserForm.get('isbn').errors?.required">This Field is required</small>
+              <small class="text-danger" *ngIf="enrolluserForm.get('isbn').errors.pattern">Length must be 12 and numeric</small>
+            </div>                   
+          </div>  
+        
+          <div class="md-form">
+            <input mdbInput [class.is-invalid]="enrolluserForm.get('sales').invalid && enrolluserForm.get('sales').touched" required formControlName="sales" type="tel" id="form1" name="sales" class="form-control">
+            <label for="form1" class="">Sales</label>
+            <div *ngIf="enrolluserForm.get('sales').invalid && enrolluserForm.get('sales').touched" >
+              <small class="text-danger" *ngIf="enrolluserForm.get('sales').errors?.required">This Field is required</small>
+              <small class="text-danger" *ngIf="enrolluserForm.get('sales').errors.pattern">Field must be numeric</small>
+            </div>                   
+         </div>
+         
+         <div class="md-form">
+          <input mdbInput [class.is-invalid]="enrolluserForm.get('royality').invalid && enrolluserForm.get('royality').touched" required formControlName="royality" type="tel" id="form1" name="royality" class="form-control">
+          <label for="form1" class="">Royality</label>
+          <div *ngIf="enrolluserForm.get('royality').invalid && enrolluserForm.get('royality').touched" >
+            <small class="text-danger" *ngIf="enrolluserForm.get('royality').errors?.required">This Field is required</small>
+            <small class="text-danger" *ngIf="enrolluserForm.get('royality').errors.pattern">Field must be numeric</small>
+          </div>                   
+        </div>  
+
+        <div class="md-form">
+            <input mdbInput [class.is-invalid]="enrolluserForm.get('amount').invalid && enrolluserForm.get('amount').touched" required formControlName="amount" type="tel" id="form1" name="amount" class="form-control">
+            <label for="form1" class="">Amount</label>
+            <div *ngIf="enrolluserForm.get('amount').invalid && enrolluserForm.get('amount').touched" >
+              <small class="text-danger" *ngIf="enrolluserForm.get('amount').errors?.required">This Field is required</small>
+              <small class="text-danger" *ngIf="enrolluserForm.get('amount').errors?.pattern">Field must be numeric</small>
+            </div>                   
+        </div>  
+
+        <div class="md-form">
+            <input mdbInput [class.is-invalid]="enrolluserForm.get('withdrawal_amount').invalid && enrolluserForm.get('withdrawal_amount').touched" required formControlName="withdrawal_amount" type="tel" id="form1" name="withdrawal_amount" class="form-control">
+            <label for="form1" class="">Withdrawal Amount</label>
+            <div *ngIf="enrolluserForm.get('withdrawal_amount').invalid && enrolluserForm.get('withdrawal_amount').touched" >
+              <small class="text-danger" *ngIf="enrolluserForm.get('withdrawal_amount').errors?.required">This Field is required</small>
+              <small class="text-danger" *ngIf="enrolluserForm.get('withdrawal_amount').errors?.pattern">Field must be numeric</small>
+            </div>                   
+        </div>  
+          <div>
+      
+          </div>
+        
+          <!-- Sign in button -->
+          <button [disabled]="!enrolluserForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Enroll</button>  
+        
+                  </form>
+            </div>
+          </div>
+        
+        </div>
+        <hr>
+      </div>
+      <div class="overlay" (click)="toggleSidebar()"></div>
+    </main>
+  </div>
+  
