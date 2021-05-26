@@ -9,6 +9,7 @@ import { throwError} from 'rxjs';
 export class TablechangeService {
   url='http://localhost:8081/auth/add';
   urlget='http://localhost:8081/auth/info';
+  urledit='http://localhost:8081/auth/edit';
   constructor(private http: HttpClient) { }
   check(tablechange)
   {
@@ -23,10 +24,12 @@ export class TablechangeService {
   gettinginfo()
   {
     return this.http.get<any>(this.urlget)
-    .pipe(catchError(this.errorHandle))
+    .pipe(catchError(this.errorHandler))
   } 
-  errorHandle(error: HttpErrorResponse)
+
+  editinfo(editdb)
   {
-    return throwError(error);
+    return this.http.post<any>(this.url,editdb)
+    .pipe(catchError(this.errorHandler))
   }
 }
