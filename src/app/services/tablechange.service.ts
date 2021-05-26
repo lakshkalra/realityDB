@@ -29,7 +29,7 @@ export class TablechangeService {
 
   editinfo(editdb)
   {
-    return this.http.post<any>(this.url,editdb)
+    return this.http.post<any>(this.urledit,editdb)
     .pipe(catchError(this.errorHandler))
   }
 }
