@@ -26,7 +26,6 @@ import { ChangepwComponent } from './components/changepw/changepw.component';
 import { RoyalityComponent } from './pages/royality/royality.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthoritydashboardComponent } from './pages/authoritydashboard/authoritydashboard.component';
-import { DragableColumnDirective } from './dragable-column.directive';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { AddpageComponent } from './pages/addpage/addpage.component';
 
@@ -44,7 +43,6 @@ import { AddpageComponent } from './pages/addpage/addpage.component';
     RoyalityComponent,
     ProfileComponent,
     AuthoritydashboardComponent,
-    DragableColumnDirective,
     UserTableComponent,
     AddpageComponent,
   ],
