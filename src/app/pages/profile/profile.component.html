@@ -1,0 +1,109 @@
+<div class="wrapper default-theme" [ngClass]="getClasses()">
+    <app-navbar></app-navbar>
+    <main>
+      <app-sidebar></app-sidebar>
+      <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
+        <div>
+          <h4 class="mb-4" style="color: #fff;">Dashboard</h4>
+  
+          <div class="container">
+            <div class="main-body">
+                <div class="row p-3 d-flex justify-content-center">
+                    <div class="col-lg-4">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex flex-column align-items-center text-center">
+                                    <div class="mt-3">
+                                        <h4>John Doe</h4>
+                                        <p class="text-secondary mb-1">Wallet: Rs 100</p>
+                                        <button class="btn btn-primary">Transfer</button>
+                                    </div>
+                                </div>
+                                <hr class="my-4">
+                                <ul class="list-group list-group-flush">
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0"><i class="fa fa-rupee-sign" aria-hidden="true"></i>Sales</h6>
+                                        <span class="text-secondary">200</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                      <h6 class="mb-0"><i class="fa fa-rupee-sign" aria-hidden="true"></i>Royality</h6>
+                                      <span class="text-secondary">300</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                      <h6 class="mb-0"><img src="../../../assets/images/iconfinder_flipkart_1217101.png" width="25" height="25">Flipkart</h6>
+                                      <span class="text-secondary">150</span>
+                                    </li>
+                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
+                                        <h6 class="mb-0"><i class="fab fa-amazon"></i>Amazon</h6>
+                                        <span class="text-secondary">50</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               <div class="row d-flex justify-content-center  p-3"> 
+                <div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-title mb-1 p-3 d-flex text-center">
+                            <h6>Your Profile</h6>
+                          </div>
+                          <div class="card-body">
+                            <form [formGroup]="changeprofileForm">
+                              <div class="md-form md-outline">
+                                <input mdbInput required [class.is-invalid]="changeprofileForm.get('name').invalid && changeprofileForm.get('name').touched" formControlName="name" type="text" id="form1" name="name" class="form-control">
+                                <label for="form1" class="">Name</label>
+                                <div *ngIf="changeprofileForm.get('name').invalid && changeprofileForm.get('name').touched" >
+                                  <small class="text-danger" *ngIf="changeprofileForm.get('name').errors?.required">This Field is required</small>
+                                </div>                   
+                              </div>  
+                              <div class="md-form md-outline">
+                                <input mdbInput type="email" disabled [class.is-invalid]="changeprofileForm.get('email').invalid && changeprofileForm.get('email').touched" formControlName="email" id="form1" name="email" class="form-control">
+                                <label for="form1" class="">Email</label>
+                                <div *ngIf="changeprofileForm.get('email').invalid && changeprofileForm.get('email').touched" >
+                                    <small class="text-danger" *ngIf="changeprofileForm.get('email').errors?.required">This Field is required</small>
+                                </div>                   
+                              </div>
+                              <div class="md-form md-outline">
+                                <input mdbInput type="tel" [class.is-invalid]="changeprofileForm.get('phone').invalid && changeprofileForm.get('phone').touched" formControlName="phone" id="form1" name="phone" class="form-control">
+                                <label for="form1" class="">Phone Number</label>
+                                <div *ngIf="changeprofileForm.get('phone').invalid && changeprofileForm.get('phone').touched" >
+                                    <small class="text-danger" *ngIf="changeprofileForm.get('phone').errors?.required">This Field is required</small>
+                                </div>                   
+                              </div>
+                              <div class="md-form md-outline">
+                                <input disabled [class.is-invalid]="changeprofileForm.get('password').invalid && changeprofileForm.get('password').touched" formControlName="password" mdbInput type="password" id="form1" name="amount"class="form-control">
+                                <label for="form1" class="">Password</label>
+                                <div *ngIf="changeprofileForm.get('password').invalid && changeprofileForm.get('password').touched" >
+                                    <small class="text-danger" *ngIf="changeprofileForm.get('password').errors?.required">This Field is required</small>
+                                </div>                   
+                              </div>
+                                <a (click)=openPopup()>Change Password</a>                          
+                              <div class="form-group text-center">
+                                <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  
+                              </div>
+                            </form>
+                         
+                          </div>          
+                  </div>
+                </div>
+               </div>
+        
+            </div>
+        </div>
+        
+        </div>
+        <hr>
+      </div>
+      <div class="overlay" (click)="toggleSidebar()"></div>
+    </main>
+  </div>
+  <div id="popup1" class="overlay">
+    <div class="popup">
+      <a class="close" (click)="closePopup()">&times;</a>
+  <!-- Default form login -->
+  <app-changepw></app-changepw>
+  <!-- Default form login -->
+    </div>
+  </div>
+  

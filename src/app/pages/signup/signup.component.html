@@ -32,10 +32,11 @@
        </div>
       <div class="md-form md-outline">
           <!-- <mdb-icon fas icon="envelope"></mdb-icon> -->
-          <input mdbInput required type="password" #password="ngModel" id="form1" class.is-invalid="password.invalid && password.touched" name="password" [(ngModel)]="usermodel.password" class="form-control">
+          <input mdbInput required type="password" minlength="7" #password="ngModel" id="form1" class.is-invalid="password.invalid && password.touched" name="password" [(ngModel)]="usermodel.password" class="form-control">
           <label for="form1" class="">Password</label>
           <div *ngIf="password.errors && (password.invalid && password.touched)" >
             <small class="text-danger" *ngIf="password.errors.required">This Field is required</small>
+            <small class="text-danger" *ngIf="password.errors.minlength">Password must be of 7 character and should contain numbers, alphabets and special character</small>
           </div>
           </div>  
         <div class="text-center">

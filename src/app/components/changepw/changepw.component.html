@@ -1,1 +1,28 @@
-<p>changepw works!</p>
+                
+<form [formGroup]="changepwForm" class="text-center border border-light p-5">
+
+    <p class="h4 mb-4">Password Change</p>
+  
+    <!-- Email -->
+    <div class="md-form md-outline">
+        <input mdbInput required [class.is-invalid]="changepwForm.get('previous_password').invalid && changepwForm.get('previous_password').touched" formControlName="previous_password" type="text" id="form1" name="previous_password" class="form-control">
+        <label for="form1" class="">Previous Password</label>
+        <div *ngIf="changepwForm.get('previous_password').invalid && changepwForm.get('previous_password').touched" >
+          <small class="text-danger" *ngIf="changepwForm.get('previous_password').errors?.required">This Field is required</small>
+        </div>                   
+      </div>  
+  
+    <!-- Password -->
+    <div class="md-form md-outline">
+        <input mdbInput required [class.is-invalid]="changepwForm.get('new_password').invalid && changepwForm.get('new_password').touched" formControlName="new_password" type="text" id="form1" name="new_password" class="form-control">
+        <label for="form1" class="">New Password</label>
+        <div *ngIf="changepwForm.get('new_password').invalid && changepwForm.get('new_password').touched" >
+          <small class="text-danger" *ngIf="changepwForm.get('new_password').errors?.required">This Field is required</small>
+        </div>                   
+      </div>    
+  
+    <!-- Sign in button -->
+    <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  
+  
+  </form>
+  
