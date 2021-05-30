@@ -3,7 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-
+import {AuthGuard} from './gaurds/auth.guard';
+import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +29,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthoritydashboardComponent } from './pages/authoritydashboard/authoritydashboard.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { AddpageComponent } from './pages/addpage/addpage.component';
+
 
 @NgModule({
   declarations: [
@@ -61,7 +63,7 @@ import { AddpageComponent } from './pages/addpage/addpage.component';
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [AuthGuard,{provide: JWT_OPTIONS, useValue: JWT_OPTIONS},JwtHelperService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { SignupComponent } from '../app/pages/signup/signup.component';
+import { ProfileComponent } from '../app/pages/profile/profile.component';
 import { LoginComponent } from '../app/pages/login/login.component';
 import { LandingComponent } from '../app/pages/landing/landing.component';
 import {DashboardComponent} from '../app/pages/dashboard/dashboard.component';
+import { AuthGuard } from './gaurds/auth.guard';
  
 
 const routes: Routes = [
@@ -18,7 +20,13 @@ const routes: Routes = [
   },
   {
     path: 'dashboard',
-    component: DashboardComponent
+    component: DashboardComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'myprofile',
+    component: ProfileComponent,
+    canActivate:[AuthGuard]
   },
   {
     path: 'login',
@@ -33,6 +41,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [AuthGuard]
 })
 export class AppRoutingModule { }

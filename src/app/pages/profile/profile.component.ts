@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { LoginService } from '../../services/login.service';
 
 
 @Component({
@@ -9,8 +10,9 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
+  user:Object;
 
-  constructor(private appService: AppService,private fb: FormBuilder) { }
+  constructor(private appService: AppService,private fb: FormBuilder,private auth: LoginService) { }
 
   closePopup()
   {
@@ -41,6 +43,16 @@ export class ProfileComponent implements OnInit {
 
 
   ngOnInit(): void {
+      
+      this.auth.getProfile().subscribe(
+        data=> {
+            this.user=data.user;
+        },
+        error => {
+            console.log("Error!",error);       
+          }  
+      )
+
       this.changeprofileForm.patchValue({
         name: 'John Doe',
         email: 'John@gmail.com',
