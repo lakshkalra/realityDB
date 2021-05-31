@@ -18,6 +18,14 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 8
     },
+    resetLink: {
+        data: String,
+        default: ''
+    },
+    otp: {
+        data: Number,
+        default: ''
+    },
     date: {
         type: Date,
         default: Date.now

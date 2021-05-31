@@ -7,9 +7,7 @@ const router = require("express").Router();
 //ADDING NEW CUSTOMER
 router.post("/auth/add", async (req, res) => {
 
-    b = req.body
-
-    const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = b.tableRows[0]
+    const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = req.body
 
     const isbn_exist = await Customer.findOne({ isbn })
 

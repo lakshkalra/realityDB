@@ -3,6 +3,9 @@ const User = require("../model/user")
 const router = require("express").Router();
 const bcrypt = require("bcryptjs")
 const JWT = require("jsonwebtoken")
+const otpGen = require('otp-generator')
+const nodemailer = require('nodemailer');
+const _ = require("lodash")
 
 const {
     user_register_validation,
@@ -87,5 +90,83 @@ router.post("/login", async (req, res) => {
 
 })
 
+
+router.post("/forgot-password", async (req, res) => {
+    const { email } = req.body;
+
+    otp = otpGen.generate(6, { upperCase: false, specialChars: false, alphabets: false });
+
+    User.findOne({ email }, (err, user) => {
+        if (!user) return res.status(400).json({ msg: "Invalid email!!!" })
+
+
+        // const token = JWT.sign({ _id: user._id }, process.env.RESET_TOKEN, { expiresIn: '20m' })
+        // const data = {
+        //     from: 'lakshlkalratemp@gmail.com',
+        //     to: email,
+        //     subject: "Password reset link",
+        //     html: `
+        //     <h2> Click on Link to reset password
+        //     otp: ${otp}
+        //     <br>
+        //     token: ${token}
+        //     `
+        // };
+
+        return user.updateOne({ otp: otp }, (err, success) => {
+
+            if (err) {
+                return res.status(401).json({ msg: "reset link error!" })
+            } else {
+
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'lakshlkalratemp@gmail.com',
+                        pass: 'uc@ntcmee1'
+                    }
+                });
+
+                var mailOptions = {
+                    from: 'lakshlkalratemp@gmail.com',
+                    to: 'lakshkalra64@gmail.com',
+                    subject: 'password reset',
+                    text: otp
+                };
+
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        console.log(error);
+                    } else {
+                        return res.status(200).json(info.response)
+                        // console.log('Email sent: ' + info.response);
+                    }
+                });
+            }
+        })
+    })
+})
+
+router.post('/reset-password', async (req, res) => {
+    const { otp, newpass, email } = req.body
+
+    // if (otp) {
+
+    userr = await User.findOne({ email })
+    console.log(userr.otp, otp)
+
+    if (otp == userr.otp) {
+
+        await User.findByIdAndUpdate(userr._id, { otp: "", password: newpass })
+        return res.status(200).json({ msg: "password updated successfully" })
+
+    } else return res.send("invalid otp")
+
+
+
+    // await User.findOneAndUpdate(otp, { password: newpass, otp: otp })
+    // return res.send("done")
+    // } else return res.status(401).json({ msg: "Authentication error" })
+})
 
 module.exports = router;
