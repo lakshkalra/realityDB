@@ -61,7 +61,6 @@ router.post("/login", async (req, res) => {
 
     // VALIDATE DETAILS
     const { error } = user_login_validation(req.body);
-    console.log(req.body)
 
     if (error) {
         console.log(error)
@@ -85,7 +84,7 @@ router.post("/login", async (req, res) => {
         { _id: user._id },
         process.env.TOKEN_SECRET);
     res.header("auth-token", token).json({
-        token: token
+        token, user
     })
 
 })
@@ -98,20 +97,6 @@ router.post("/forgot-password", async (req, res) => {
 
     User.findOne({ email }, (err, user) => {
         if (!user) return res.status(400).json({ msg: "Invalid email!!!" })
-
-
-        // const token = JWT.sign({ _id: user._id }, process.env.RESET_TOKEN, { expiresIn: '20m' })
-        // const data = {
-        //     from: 'lakshlkalratemp@gmail.com',
-        //     to: email,
-        //     subject: "Password reset link",
-        //     html: `
-        //     <h2> Click on Link to reset password
-        //     otp: ${otp}
-        //     <br>
-        //     token: ${token}
-        //     `
-        // };
 
         return user.updateOne({ otp: otp }, (err, success) => {
 
@@ -139,7 +124,6 @@ router.post("/forgot-password", async (req, res) => {
                         console.log(error);
                     } else {
                         return res.status(200).json(info.response)
-                        // console.log('Email sent: ' + info.response);
                     }
                 });
             }
@@ -150,23 +134,19 @@ router.post("/forgot-password", async (req, res) => {
 router.post('/reset-password', async (req, res) => {
     const { otp, newpass, email } = req.body
 
-    // if (otp) {
-
     userr = await User.findOne({ email })
     console.log(userr.otp, otp)
 
+    const salt = await bcrypt.genSalt(10);
+    const new_hashed_pass = await bcrypt.hash(req.body.newpass, salt);
+
     if (otp == userr.otp) {
 
-        await User.findByIdAndUpdate(userr._id, { otp: "", password: newpass })
+        await User.findByIdAndUpdate(userr._id, { otp: "", password: new_hashed_pass })
         return res.status(200).json({ msg: "password updated successfully" })
 
     } else return res.send("invalid otp")
 
-
-
-    // await User.findOneAndUpdate(otp, { password: newpass, otp: otp })
-    // return res.send("done")
-    // } else return res.status(401).json({ msg: "Authentication error" })
 })
 
 module.exports = router;
