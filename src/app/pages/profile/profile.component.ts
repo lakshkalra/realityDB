@@ -11,18 +11,16 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user:Object;
-  errorMsg="";
+  user: Object;
+  errorMsg = "";
 
-  constructor(private appService: AppService,private fb: FormBuilder,private auth: LoginService,private router: Router) { }
+  constructor(private appService: AppService, private fb: FormBuilder, private auth: LoginService, private router: Router) { }
 
-  closePopup()
-  {
-    document.getElementById('popup1').style.display="none";
+  closePopup() {
+    document.getElementById('popup1').style.display = "none";
   }
-  openPopup()
-  {
-    document.getElementById('popup1').style.display="block";
+  openPopup() {
+    document.getElementById('popup1').style.display = "block";
   }
 
   getClasses() {
@@ -37,36 +35,35 @@ export class ProfileComponent implements OnInit {
   }
 
   changeprofileForm = this.fb.group({
-    name:['',[Validators.required]],
-    email:['',[Validators.required]],
-    contact: ['',[Validators.required]]
+    name: ['', [Validators.required]],
+    email: ['', [Validators.required]],
+    contact: ['', [Validators.required]]
   });
 
 
   ngOnInit(): void {
-      
-      this.auth.getProfile().subscribe(
-        data=> {
-            this.user=data.user;
-        },
-        error => {
-            console.log("Error!",error);       
-          }  
-      )
-     
-      this.changeprofileForm.patchValue({
-        name: 'John Doe',
-        email: 'John@gmail.com',
-        contact: '8851127547',
+
+    this.auth.getProfile().subscribe(
+      data => {
+        this.user = data.user;
+      },
+      error => {
+        console.log("Error!", error);
+      }
+    )
+
+    this.changeprofileForm.patchValue({
+      name: 'John Doe',
+      email: 'John@gmail.com',
+      contact: '8851127547',
     })
   }
-  onSubmit()
-  {
+  onSubmit() {
     this.auth.changeinfouser(this.changeprofileForm.value)
-    .subscribe(
-      data => {console.log("Success!!!",data);},
-      error => {this.errorMsg=error.error;}
-    )
+      .subscribe(
+        data => { console.log("Success!!!", data); },
+        error => { this.errorMsg = error.error; }
+      )
   }
 
 

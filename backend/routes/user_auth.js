@@ -155,7 +155,8 @@ router.post('/reset-password', async (req, res) => {
 router.get('/myprofile', verify, async (req, res) => {
 
     //DECODE TOKEN 
-    const token = req.header("auth-token")
+    const token = req.header("Authorization")
+    console.log(token)
     var decoded = jwt_decode(token)
 
     await User.findById(decoded._id, (err, result) => {
