@@ -15,18 +15,18 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  usermodel=new Login("","");
-  errorMsg='';
-  
-  onSubmit()
-  {
-      this.loginservice.check(this.usermodel)
-    .subscribe(
-      data => {console.log("Success!!!",data);
-      this.router.navigate(['/dashboard']);
-      this.loginservice.storeUserData(data.token);
-    },
-      error => {this.errorMsg=error.error;}
-    )
+  usermodel = new Login("", "");
+  errorMsg = '';
+
+  onSubmit() {
+    this.loginservice.check(this.usermodel)
+      .subscribe(
+        data => {
+          this.loginservice.storeUserData(data.token);
+          console.log(data)
+          this.router.navigate(['/dashboard']);
+        },
+        error => { this.errorMsg = error.error; }
+      )
   }
 }

@@ -6,6 +6,7 @@ const JWT = require("jsonwebtoken")
 const otpGen = require('otp-generator')
 const nodemailer = require('nodemailer');
 const _ = require("lodash")
+const verify = require("./user_verification")
 
 const {
     user_register_validation,
@@ -82,9 +83,9 @@ router.post("/login", async (req, res) => {
 
     const token = JWT.sign(
         { _id: user._id },
-        process.env.TOKEN_SECRET);
+        process.env.TOKEN_SECRET, { expiresIn: 60 * 60 });
     res.header("auth-token", token).json({
-        token, user
+        token, user: user.type
     })
 
 })
@@ -146,6 +147,17 @@ router.post('/reset-password', async (req, res) => {
         return res.status(200).json({ msg: "password updated successfully" })
 
     } else return res.send("invalid otp")
+
+})
+
+router.post('/myprofile', verify, async (req, res) => {
+
+    const { email, name, contact } = req.body;
+
+    userr = await User.findOne({ email })
+
+    await User.findByIdAndUpdate(userr._id, { name, contact })
+    res.status(200).json({ msg: "information updated!" })
 
 })
 
