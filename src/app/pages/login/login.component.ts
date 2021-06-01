@@ -25,9 +25,9 @@ export class LoginComponent implements OnInit {
       data => {console.log("Success!!!",data);
       this.loginservice.storeUserData(data.token);
       this.loginservice.authsidebar=false;
-      if(data.user.type="User")
+      if(data.user="User")
       this.router.navigate(['/dashboard']);
-      else if(data.user.type="Authority")
+      else if(data.user="Authority")
       this.router.navigate(['/authdashboard']);
     },
       error => {this.errorMsg=error.error;}

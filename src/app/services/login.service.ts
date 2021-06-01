@@ -41,9 +41,10 @@ export class LoginService {
   }
 
   getProfile(){
-    let headers= new HttpHeaders();
     this.LoadToken();
-    headers.append('Authorization',this.authtoken);
+    let headers= new HttpHeaders({
+      'Authorization':this.authtoken
+    });
     return this.http.get<any>(this.profileurl,{headers: headers})
     .pipe(catchError(this.errorHandler))
   }
