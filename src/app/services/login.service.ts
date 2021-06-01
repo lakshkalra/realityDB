@@ -10,8 +10,9 @@ import { throwError} from 'rxjs';
   providedIn: 'root'
 })
 export class LoginService {
+  authsidebar=true;
   authtoken: any;
-  profileurl="";
+  profileurl="http://localhost:8081/user/myprofile";
   login_url='http://localhost:8081/user/login';
   forgot_url='';
   constructor(private http: HttpClient,public jwtHelper: JwtHelperService) { }
@@ -45,7 +46,8 @@ export class LoginService {
 
   loggedIn()
   {
-    return this.jwtHelper.isTokenExpired();
+    const token= localStorage.getItem('id_token');
+    return this.jwtHelper.isTokenExpired(token);
   }
    LoadToken()
    {

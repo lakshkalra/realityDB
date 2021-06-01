@@ -42,6 +42,22 @@
           </a>
         </li>
         <li>
+        <li *ngIf="auth.authsidebar">
+            <a href="#" routerLink="/check-information" routerLinkActive="active">
+              <i class="fa fa-user"></i>
+              <span>Changing Information</span>
+            </a>
+          </li>
+        <li>
+        <li>
+            <a *ngIf="auth.authsidebar" href="#" routerLink="/check-information" routerLinkActive="active">
+              <i class="fa fa-user"></i>
+              <span>Add New Member</span>
+            </a>
+          </li>
+        <li>
+  
+    
           <a (click)="onLogout()" routerLinkActive="active">
             <i class="fas fa-power-off"></i>
             <span>Log-Out</span>

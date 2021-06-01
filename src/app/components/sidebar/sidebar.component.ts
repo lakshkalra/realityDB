@@ -3,6 +3,7 @@ import { LoginService } from "../../services/login.service";
 import { Router } from '@angular/router';
 
 
+
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
@@ -10,7 +11,7 @@ import { Router } from '@angular/router';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(private auth: LoginService,private router: Router) { }
+  constructor(public auth: LoginService,private router: Router) { }
 
   ngOnInit(): void {
   }

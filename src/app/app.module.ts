@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { WavesModule, TableModule, InputsModule } from 'angular-bootstrap-md';
 import {AuthGuard} from './gaurds/auth.guard';
 import { JwtHelperService, JWT_OPTIONS  } from '@auth0/angular-jwt';
 
@@ -49,6 +50,9 @@ import { AddpageComponent } from './pages/addpage/addpage.component';
     AddpageComponent,
   ],
   imports: [
+    WavesModule,
+    InputsModule,
+    TableModule,
     BrowserModule,
     AppRoutingModule,
     MDBBootstrapModule.forRoot(),
