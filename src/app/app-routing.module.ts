@@ -6,6 +6,7 @@ import { LoginComponent } from '../app/pages/login/login.component';
 import { LandingComponent } from '../app/pages/landing/landing.component';
 import {DashboardComponent} from '../app/pages/dashboard/dashboard.component';
 import { AuthGuard } from './gaurds/auth.guard';
+import { AuthoritydashboardComponent } from '../app/pages/authoritydashboard/authoritydashboard.component'
  
 
 const routes: Routes = [
@@ -21,6 +22,11 @@ const routes: Routes = [
   {
     path: 'dashboard',
     component: DashboardComponent,
+    canActivate:[AuthGuard]
+  },
+  {
+    path: 'authdashboard',
+    component: AuthoritydashboardComponent,
     canActivate:[AuthGuard]
   },
   {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
 
 
@@ -11,8 +12,9 @@ import { LoginService } from '../../services/login.service';
 })
 export class ProfileComponent implements OnInit {
   user:Object;
+  errorMsg="";
 
-  constructor(private appService: AppService,private fb: FormBuilder,private auth: LoginService) { }
+  constructor(private appService: AppService,private fb: FormBuilder,private auth: LoginService,private router: Router) { }
 
   closePopup()
   {
@@ -37,8 +39,7 @@ export class ProfileComponent implements OnInit {
   changeprofileForm = this.fb.group({
     name:['',[Validators.required]],
     email:['',[Validators.required]],
-    phone: ['',[Validators.required]],
-    password:['',[Validators.required]],
+    contact: ['',[Validators.required]]
   });
 
 
@@ -52,13 +53,21 @@ export class ProfileComponent implements OnInit {
             console.log("Error!",error);       
           }  
       )
-
+     
       this.changeprofileForm.patchValue({
         name: 'John Doe',
         email: 'John@gmail.com',
-        phone: '8851127547',
-        password: 'Hello123'
+        contact: '8851127547',
     })
   }
+  onSubmit()
+  {
+    this.auth.changeinfouser(this.changeprofileForm.value)
+    .subscribe(
+      data => {console.log("Success!!!",data);},
+      error => {this.errorMsg=error.error;}
+    )
+  }
+
 
 }

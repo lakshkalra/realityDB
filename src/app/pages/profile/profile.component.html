@@ -1,4 +1,4 @@
-<div *ngIf="user" class="wrapper default-theme" [ngClass]="getClasses()">
+<div class="wrapper default-theme" [ngClass]="getClasses()">
     <app-navbar></app-navbar>
     <main>
       <app-sidebar></app-sidebar>
@@ -49,7 +49,7 @@
                             <h6>Your Profile</h6>
                           </div>
                           <div class="card-body">
-                            <form [formGroup]="changeprofileForm">
+                            <form (ngSubmit)="onSubmit()" [formGroup]="changeprofileForm">
                               <div class="md-form md-outline">
                                 <input mdbInput required [class.is-invalid]="changeprofileForm.get('name').invalid && changeprofileForm.get('name').touched" formControlName="name" type="text" id="form1" name="name" class="form-control">
                                 <label for="form1" class="">Name</label>
@@ -65,17 +65,10 @@
                                 </div>                   
                               </div>
                               <div class="md-form md-outline">
-                                <input mdbInput type="tel" [class.is-invalid]="changeprofileForm.get('phone').invalid && changeprofileForm.get('phone').touched" formControlName="phone" id="form1" name="phone" class="form-control">
+                                <input mdbInput type="tel" [class.is-invalid]="changeprofileForm.get('contact').invalid && changeprofileForm.get('contact').touched" formControlName="contact" id="form1" name="contact" class="form-control">
                                 <label for="form1" class="">Phone Number</label>
-                                <div *ngIf="changeprofileForm.get('phone').invalid && changeprofileForm.get('phone').touched" >
-                                    <small class="text-danger" *ngIf="changeprofileForm.get('phone').errors?.required">This Field is required</small>
-                                </div>                   
-                              </div>
-                              <div class="md-form md-outline">
-                                <input disabled [class.is-invalid]="changeprofileForm.get('password').invalid && changeprofileForm.get('password').touched" formControlName="password" mdbInput type="password" id="form1" name="amount"class="form-control">
-                                <label for="form1" class="">Password</label>
-                                <div *ngIf="changeprofileForm.get('password').invalid && changeprofileForm.get('password').touched" >
-                                    <small class="text-danger" *ngIf="changeprofileForm.get('password').errors?.required">This Field is required</small>
+                                <div *ngIf="changeprofileForm.get('contact').invalid && changeprofileForm.get('contact').touched" >
+                                    <small class="text-danger" *ngIf="changeprofileForm.get('contact').errors?.required">This Field is required</small>
                                 </div>                   
                               </div>
                                 <a (click)=openPopup()>Change Password</a>                          

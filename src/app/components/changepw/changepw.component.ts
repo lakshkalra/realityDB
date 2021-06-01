@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder,Validators } from '@angular/forms';
+import { LoginService } from '../../services/login.service';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-changepw',
@@ -8,20 +11,19 @@ import { FormBuilder,Validators } from '@angular/forms';
 })
 export class ChangepwComponent implements OnInit {
 
-  constructor(private fb: FormBuilder) { }
-  changepasswordobject={
-    email:"",
-    previous_password:"",
-    new_password:""
-  };
+  constructor(private fb: FormBuilder,private auth: LoginService,private router: Router) { }
   ngOnInit(): void {
-    this.changepasswordobject.previous_password=this.changepwForm.get("previous_password").value;
-    this.changepasswordobject.new_password=this.changepwForm.get("new_password").value;
     }
+    errorMsg="";
 
     onSubmit()
     {
-  
+      this.auth.check(this.changepwForm.value)
+      .subscribe(
+        data => {console.log("Success!!!",data);
+        this.router.navigate(['/home']);},
+        error => {this.errorMsg=error.error;}
+      )
     }
 
   changepwForm = this.fb.group({

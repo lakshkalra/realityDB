@@ -1,5 +1,5 @@
                 
-<form [formGroup]="changepwForm" class="text-center border border-light p-5">
+<form (ngSubmit)="onSubmit()" [formGroup]="changepwForm" class="text-center border border-light p-5">
 
     <p class="h4 mb-4">Password Change</p>
   
