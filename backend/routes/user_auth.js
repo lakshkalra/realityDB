@@ -6,6 +6,9 @@ const JWT = require("jsonwebtoken")
 const otpGen = require('otp-generator')
 const nodemailer = require('nodemailer');
 const _ = require("lodash")
+const verify = require("./user_verification")
+const jwt_decode = require("jwt-decode")
+
 
 const {
     user_register_validation,
@@ -82,9 +85,9 @@ router.post("/login", async (req, res) => {
 
     const token = JWT.sign(
         { _id: user._id },
-        process.env.TOKEN_SECRET);
+        process.env.TOKEN_SECRET, { expiresIn: 60 * 60 });
     res.header("auth-token", token).json({
-        token, user
+        token, user: user.type
     })
 
 })
@@ -146,6 +149,67 @@ router.post('/reset-password', async (req, res) => {
         return res.status(200).json({ msg: "password updated successfully" })
 
     } else return res.send("invalid otp")
+
+})
+
+router.get('/myprofile', verify, async (req, res) => {
+
+    //DECODE TOKEN 
+    const token = req.header("auth-token")
+    var decoded = jwt_decode(token)
+
+    await User.findById(decoded._id, (err, result) => {
+        if (err) return res.status(400).json(err)
+
+        res.status(200).json({
+            name: result.name,
+            contact: result.contact,
+            email: result.email
+        })
+    })
+
+})
+
+//UPDATING INFORTION FROM ROUTE OF MYPROFILE
+router.post('/myprofile', verify, async (req, res) => {
+
+    const { email, name, contact } = req.body;
+
+    userr = await User.findOne({ email })
+
+    await User.findByIdAndUpdate(userr._id, { name, contact })
+    res.status(200).json({ msg: "information updated!" })
+
+})
+
+//CHANGING PASSWORD OF USER
+router.post('/changepass', verify, async (req, res) => {
+
+    const { previous_password, new_password } = req.body
+
+    const token = req.header("auth-token")
+    var decoded = jwt_decode(token)
+
+    await User.findById(decoded._id, async (err, result) => {
+        if (err) return res.status(400).json(err)
+
+
+        const valid_pass = await bcrypt.compare(previous_password, result.password);
+
+        if (!valid_pass) return res.status(400).send("Invalid password");
+
+
+        //PASSWORD HASHING USING BCRYPT
+        const salt = await bcrypt.genSalt(10);
+        const hashed_pass = await bcrypt.hash(new_password, salt);
+
+        await User.findByIdAndUpdate(decoded._id, { password: hashed_pass }, (err, success) => {
+            if (err) return res.status(400).json(err)
+
+            res.status(200).json({ msg: "successfully updated" })
+        })
+
+    })
 
 })
 
