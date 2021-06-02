@@ -23,6 +23,7 @@ export class AddpageComponent implements OnInit {
   errorMsg="";
   enrolluserForm = this.fb.group({
     name: ['',Validators.required],
+    email: ['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
     book_name:['',Validators.required],
     isbn:['',[Validators.required,Validators.pattern("^[0-9]{12}$")]],
     sales:['',[Validators.required,Validators.pattern("^[0-9]*$")]],

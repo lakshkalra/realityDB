@@ -1,7 +1,7 @@
 <div class="wrapper default-theme" [ngClass]="getClasses()">
     <app-navbar></app-navbar>
     <main>
-      <app-sidebar></app-sidebar>
+      <app-authoritysidebar></app-authoritysidebar>
       <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
         <div>
           <h4 class="mb-4" style="color: #fff;">Dashboard</h4>
@@ -29,6 +29,11 @@
                 <div class="card-title mb-1 p-3 d-flex">
                   <h6>Changes</h6>
                 </div>
+
+                <div class="alert alert-danger" *ngIf="errorMsg">
+                  {{errorMsg}}
+                </div>
+          
                 <div class="card-body">
                   <form [formGroup]="changeuserForm" (ngSubmit)="onSubmit()">
                     <div class="md-form md-outline">
@@ -61,7 +66,7 @@
                       </div>                   
                     </div>
                     <div class="form-group text-center">
-                      <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  
+                      <button [disabled]="!changeuserForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  
                     </div>
                   </form>
                

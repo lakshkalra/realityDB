@@ -10,6 +10,10 @@
             <form [formGroup]='forgotuserForm' class="border border-light p-5 z-depth-5 text-center" style="background: #fff;">
 
               <p class="h4 mb-4">Forgot Password</p>
+
+              <div class="alert alert-danger" *ngIf="errorMsg">
+                {{errorMsg}}
+              </div>        
   
     <!-- Email -->
     <div class="md-form">
@@ -39,7 +43,7 @@
     </div>
   
     <!-- Sign in button -->
-    <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  
+    <button [disabled]="!forgotuserForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Change</button>  
   
             </form>
         </div>

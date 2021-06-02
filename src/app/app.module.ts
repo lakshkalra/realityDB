@@ -30,6 +30,7 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { AuthoritydashboardComponent } from './pages/authoritydashboard/authoritydashboard.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { AddpageComponent } from './pages/addpage/addpage.component';
+import { AuthoritysidebarComponent } from './components/authoritysidebar/authoritysidebar.component';
 
 
 @NgModule({
@@ -48,6 +49,7 @@ import { AddpageComponent } from './pages/addpage/addpage.component';
     AuthoritydashboardComponent,
     UserTableComponent,
     AddpageComponent,
+    AuthoritysidebarComponent,
   ],
   imports: [
     WavesModule,

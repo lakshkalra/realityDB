@@ -5,6 +5,9 @@
         <small></small>
       </div>
   <p class="h4 mb-4 text-center">Sign up</p>
+  <div class="alert alert-danger" *ngIf="errorMsg">
+    {{errorMsg}}
+  </div>
       <form #signup="ngForm" (ngSubmit)="onSubmit()">
         <!-- Material outline input -->
         <div class="md-form md-outline">
@@ -16,10 +19,11 @@
       
         </div>
         <div class="md-form md-outline">
-          <input mdbInput required type="text" #email="ngModel" id="form1" class.is-invalid="email.invalid && email.touched" name="email" [(ngModel)]="usermodel.email" class="form-control">
+          <input pattern="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" mdbInput required type="text" #email="ngModel" id="form1" class.is-invalid="email.invalid && email.touched" name="email" [(ngModel)]="usermodel.email" class="form-control">
           <label for="form1" class="">Email</label>
           <div *ngIf="email.errors && (email.invalid && email.touched)" >
             <small class="text-danger" *ngIf="email.errors.required">This Field is required</small>
+            <small class="text-danger" *ngIf="email.errors.pattern">Enter a valid Email</small>
           </div>       
         </div>
        <div class="md-form md-outline">

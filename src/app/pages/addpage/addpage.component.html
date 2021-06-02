@@ -1,16 +1,19 @@
 <div class="wrapper default-theme" [ngClass]="getClasses()">
     <app-navbar></app-navbar>
     <main>
-      <app-sidebar></app-sidebar>
+      <app-authoritysidebar></app-authoritysidebar>
       <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 ">
         <div>
           <h4 class="mb-4" style="color: #fff;"></h4>
   
           <div class="row d-flex justify-content-center align-items-center">
-            <div class="col-md-8 mb-4 ">
+            <div class="col-md-8 mb-4 p-5">
                 <form [formGroup]='enrolluserForm' (ngSubmit)="onSubmit()" class="border border-light p-5 z-depth-5 text-center" style="background: #fff;">
 
                     <p class="h4 mb-4 text-center">Enrolling New User</p>
+                    <div class="alert alert-danger" *ngIf="errorMsg">
+                      {{errorMsg}}
+                    </div>
         
           <!-- Email -->
           <div class="md-form">
@@ -19,9 +22,18 @@
               <div *ngIf="enrolluserForm.get('name').invalid && enrolluserForm.get('name').touched" >
                 <small class="text-danger" *ngIf="enrolluserForm.get('name').errors?.required">This Field is required</small>
               </div>               
-          </div>  
+          </div>
+          
+          <div class="md-form">
+            <input mdbInput [class.is-invalid]="enrolluserForm.get('email').invalid && enrolluserForm.get('email').touched" required formControlName="email" type="text" id="form1" name="email" class="form-control">
+            <label for="form1" class="">Email</label>
+            <div *ngIf="enrolluserForm.get('email').invalid && enrolluserForm.get('email').touched" >
+              <small class="text-danger" *ngIf="enrolluserForm.get('email').errors?.required">This Field is required</small>
+              <small class="text-danger" *ngIf="enrolluserForm.get('email').errors.pattern">Enter a valid Email</small>
+            </div>               
+        </div>  
+
         
-          <!-- Password -->
           <div class="md-form">
               <input mdbInput [class.is-invalid]="enrolluserForm.get('book_name').invalid && enrolluserForm.get('book_name').touched" required formControlName="book_name" type="text" id="form1" name="book_name" class="form-control">
               <label for="form1" class="">Book Name</label>

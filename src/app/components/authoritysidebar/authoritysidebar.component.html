@@ -1,0 +1,60 @@
+<aside class="sidebar shadow-sm">
+
+    <div class="navbar-header pl-2 pr-2 ml-3 text-center">
+      <a class="navbar-brand m-0 w-100" href="#">
+        <img src="../../../assets/images/loga(1).png" alt="logo" width="35px">
+        <span class="ml-1" style="color: black;">Reality Of Words</span>
+      </a>
+    </div>
+  
+  
+      <div class="sidebar-profile d-flex flex-column justify-content-center pt-5 pb-3">
+        <div class="picture-wrapper mb-4 text-center">
+            <h3>Hello!!!</h3>
+        </div>
+        <div class="profile-details text-center pb-4">
+          <p class="mb-0 text-uppercase name">John Doe</p>
+        </div>
+      </div>
+      <div class="sidebar-search pt-1 pb-1 pl-3 pr-3">
+        <input type="search" class="form-control rounded-pill" name="search" placeholder="Search ...">
+      </div>
+      <nav class="sidebar-menu pt-3 pb-3">
+        <ul class="menu-items">
+          <li>
+              <a routerLink="/authdashboard" routerLinkActive="active">
+                <i class="fa fa-home"></i>
+                <span>Home</span>
+              </a>
+          </li>
+          <li>
+              <a routerLink="/adduser" routerLinkActive="active">
+                <i class="fa fa-user"></i>
+                <span>Add New Member</span>
+              </a>
+          </li>
+          <li>
+            <a href="#" routerLink="/myprofile" routerLinkActive="active">
+              <i class="fa fa-user"></i>
+              <span>My Profile</span>
+            </a>
+          </li>
+          <li>
+            <a (click)="onLogout()" routerLinkActive="active">
+              <i class="fas fa-power-off"></i>
+              <span>Log-Out</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  
+    <div id="popup1" class="overlay">
+      <div class="popup">
+        <a class="close" (click)="closePopup()">&times;</a>
+    <!-- Default form login -->
+    <app-changepw></app-changepw>
+    <!-- Default form login -->
+      </div>
+    </div>
+  

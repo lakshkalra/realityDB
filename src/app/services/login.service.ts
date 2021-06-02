@@ -51,8 +51,10 @@ export class LoginService {
 
   changepassword(password)
   {
-    let headers= new HttpHeaders();
     this.LoadToken();
+    let headers= new HttpHeaders({
+      'Authorization':this.authtoken
+    });
     headers.append('Authorization',this.authtoken);
     return this.http.post<any>(this.change_url, password, {headers: headers})
     .pipe(catchError(this.errorHandler))

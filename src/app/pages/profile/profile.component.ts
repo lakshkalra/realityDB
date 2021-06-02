@@ -11,7 +11,7 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  user: Object;
+  user: any;
   errorMsg = "";
 
   constructor(private appService: AppService, private fb: FormBuilder, private auth: LoginService, private router: Router) { }
@@ -44,19 +44,18 @@ export class ProfileComponent implements OnInit {
   ngOnInit(): void {
 
     this.auth.getProfile().subscribe(
-      data => {
-        this.user = data.user;
+      data => {        
+        this.user = data;
+        this.changeprofileForm.get('name').setValue(this.user.name);
+        this.changeprofileForm.get('email').setValue(this.user.email);
+        this.changeprofileForm.get('contact').setValue(this.user.contact);
       },
       error => {
         console.log("Error!", error);
       }
     )
 
-    this.changeprofileForm.patchValue({
-      name: 'John Doe',
-      email: 'John@gmail.com',
-      contact: '8851127547',
-    })
+    
   }
   onSubmit() {
     this.auth.changeinfouser(this.changeprofileForm.value)

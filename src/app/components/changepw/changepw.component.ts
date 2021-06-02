@@ -28,7 +28,7 @@ export class ChangepwComponent implements OnInit {
 
   changepwForm = this.fb.group({
     previous_password:['',[Validators.required]],
-    new_password:['',[Validators.required]]
+    new_password:['',[Validators.required,Validators.pattern('(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:\{\\\}\\\[\\\]\\\|\\\+\\\-\\\=\\\_\\\)\\\(\\\)\\\`\\\/\\\\\\]])[A-Za-z0-9\d$@].{7,}')]]
   });
 
 }

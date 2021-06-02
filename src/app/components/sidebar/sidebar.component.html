@@ -9,10 +9,8 @@
 
 
     <div class="sidebar-profile d-flex flex-column justify-content-center pt-5 pb-3">
-      <div class="picture-wrapper mb-4">
-        <div class="user-picture m-auto">
-          <img src="./assets/img/user.jpg" class="img-fluid" alt="">
-        </div>
+      <div class="picture-wrapper mb-4 text-center">
+          <h3 style="font-family: cursive;">Hello!!!</h3>
       </div>
       <div class="profile-details text-center pb-4">
         <p class="mb-0 text-uppercase name">John Doe</p>
@@ -24,13 +22,13 @@
     <nav class="sidebar-menu pt-3 pb-3">
       <ul class="menu-items">
         <li >
-          <a href="#" routerLink="/dashboard" routerLinkActive="active">
+          <a routerLink="/dashboard" routerLinkActive="active">
             <i class="fa fa-tv"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li>
-          <a href="#" routerLink="/reschedule" routerLinkActive="active">
+          <a routerLink="/reschedule" routerLinkActive="active">
             <i class="fas fa-gem"></i>
             <span>Royality</span>
           </a>
@@ -42,22 +40,6 @@
           </a>
         </li>
         <li>
-        <li *ngIf="auth.authsidebar">
-            <a href="#" routerLink="/check-information" routerLinkActive="active">
-              <i class="fa fa-user"></i>
-              <span>Changing Information</span>
-            </a>
-          </li>
-        <li>
-        <li>
-            <a *ngIf="auth.authsidebar" href="#" routerLink="/check-information" routerLinkActive="active">
-              <i class="fa fa-user"></i>
-              <span>Add New Member</span>
-            </a>
-          </li>
-        <li>
-  
-    
           <a (click)="onLogout()" routerLinkActive="active">
             <i class="fas fa-power-off"></i>
             <span>Log-Out</span>

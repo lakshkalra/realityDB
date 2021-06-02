@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit {
   }
   usermodel=new Login("","");
   errorMsg='';
+  usertype='';
   
   onSubmit()
   {
@@ -24,13 +25,19 @@ export class LoginComponent implements OnInit {
     .subscribe(
       data => {console.log("Success!!!",data);
       this.loginservice.storeUserData(data.token);
-      this.loginservice.authsidebar=false;
-      if(data.user="User")
+      this.usertype=data.user;
+      if(this.usertype=="User"){
       this.router.navigate(['/dashboard']);
-      else if(data.user="Authority")
+      console.log(this.usertype);
+      }
+      else if(this.usertype=="Authority"){
       this.router.navigate(['/authdashboard']);
+      console.log(this.usertype);
+      }
     },
-      error => {this.errorMsg=error.error;}
+      error => {
+        // console.log(error.error.details[0].message);
+        this.errorMsg=error.error;}
     )
   }
 }
