@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
       this.loginservice.check(this.usermodel)
     .subscribe(
       data => {console.log("Success!!!",data);
-      this.loginservice.storeUserData(data.token);
+      this.loginservice.storeUserData(data.token,data.user);
       this.usertype=data.user;
       if(this.usertype=="User"){
       this.router.navigate(['/dashboard']);

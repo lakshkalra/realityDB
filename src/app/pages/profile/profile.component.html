@@ -8,34 +8,26 @@
   
           <div class="container">
             <div class="main-body">
-                <div class="row p-3 d-flex justify-content-center">
+                <div  *ngIf="this.usertype" class="row p-3 d-flex justify-content-center">
                     <div class="col-lg-4">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body"  *ngIf="this.usertype">
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <div class="mt-3">
-                                        <h4>John Doe</h4>
+                                        <h4>{{user.name}}</h4>
                                         <p class="text-secondary mb-1">Wallet: Rs 100</p>
                                         <button class="btn btn-primary">Transfer</button>
                                     </div>
                                 </div>
                                 <hr class="my-4">
-                                <ul class="list-group list-group-flush">
+                                <ul class="list-group list-group-flush" *ngIf="this.usertype">
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                         <h6 class="mb-0"><i class="fa fa-rupee-sign" aria-hidden="true"></i>Sales</h6>
-                                        <span class="text-secondary">200</span>
+                                        <span class="text-secondary">{{user.customer[0].sales}}</span>
                                     </li>
                                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                                       <h6 class="mb-0"><i class="fa fa-rupee-sign" aria-hidden="true"></i>Royality</h6>
-                                      <span class="text-secondary">300</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                      <h6 class="mb-0"><img src="../../../assets/images/iconfinder_flipkart_1217101.png" width="25" height="25">Flipkart</h6>
-                                      <span class="text-secondary">150</span>
-                                    </li>
-                                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                                        <h6 class="mb-0"><i class="fab fa-amazon"></i>Amazon</h6>
-                                        <span class="text-secondary">50</span>
+                                      <span class="text-secondary">{{user.customer[0].royality}}</span>
                                     </li>
                                 </ul>
                             </div>

@@ -12,6 +12,7 @@ import { throwError} from 'rxjs';
 export class LoginService {
   authsidebar=true;
   authtoken: any;
+  type: any;
   profileurl="http://localhost:8081/user/myprofile";
   login_url='http://localhost:8081/user/login';
   change_url='http://localhost:8081/user/changepass';
@@ -41,10 +42,12 @@ export class LoginService {
     .pipe(catchError(this.errorHandler))
   }
 
-  storeUserData(token)
+  storeUserData(token,type)
   {
     localStorage.setItem('id_token', token);
+    localStorage.setItem('type', type);
     this.authtoken=token;
+    this.type=type;
   }
 
   getProfile(){
@@ -84,7 +87,9 @@ export class LoginService {
    LoadToken()
    {
      const token= localStorage.getItem('id_token');
+     const user_type= localStorage.getItem('type');
      this.authtoken=token;
+     this.type=user_type;
    }
 
   logout(){
