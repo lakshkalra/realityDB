@@ -9,31 +9,30 @@ const verify = require("./user_verification")
 //ADDING NEW CUSTOMER
 router.post("/auth/add", verify, async (req, res) => {
 
-    const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = req.body
+    const { name, email, book_name, isbn, sales, royality, amount, withdrawal_amount } = req.body
 
     const isbn_exist = await Customer.findOne({ isbn })
 
     if (!isbn_exist) {
-        try {
-            const customer = new Customer({
-                name,
-                book_name,
-                isbn,
-                sales,
-                royality,
-                amount,
-                withdrawal_amount
-            })
 
-            try {
-                const saved_Customer = await customer.save();
-                res.json({ customer })
-            } catch (err) {
-                res.status(400).send(err);
-            }
+        const customer = new Customer({
+            name,
+            email,
+            book_name,
+            isbn,
+            sales,
+            royality,
+            amount,
+            withdrawal_amount
+        })
+
+        try {
+            const saved_Customer = await customer.save();
+            res.json({ customer })
         } catch (err) {
-            res.json(err)
+            res.status(400).send(err);
         }
+
 
         // }
     }

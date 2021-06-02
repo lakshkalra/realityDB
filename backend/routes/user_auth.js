@@ -28,6 +28,12 @@ router.post("/register", async (req, res) => {
         console.log(error)
         return res.status(400).send(error);
     }
+
+    //CHECKING IF EMAIL IS AUTHORISED TO MAKE AN ACCOUNT
+    const email_authorised = await Customer.findOne({ email: req.body.email })
+
+    if (!email_authorised) return res.status(400).send("This email is not authorised to create account!")
+
     //CHECKING IF EMIAL ALREADY EXIST
     const email_exist = await User.findOne({ email: req.body.email });
 
@@ -88,7 +94,7 @@ router.post("/login", async (req, res) => {
     const token = JWT.sign(
         { _id: user._id },
         process.env.TOKEN_SECRET, { expiresIn: 60 * 60 });
-    res.header("auth-token", token).json({
+    res.header("Authorization", token).json({
         token, user: user.type
     })
 
@@ -97,6 +103,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/forgot-password", async (req, res) => {
     const { email } = req.body;
+    console.log('forgot' + req.body)
 
     otp = otpGen.generate(6, { upperCase: false, specialChars: false, alphabets: false });
 
@@ -128,7 +135,7 @@ router.post("/forgot-password", async (req, res) => {
                     if (error) {
                         console.log(error);
                     } else {
-                        return res.status(200).json(info.response)
+                        return res.status(200).json(info.response + "email send")
                     }
                 });
             }
@@ -137,13 +144,14 @@ router.post("/forgot-password", async (req, res) => {
 })
 
 router.post('/reset-password', async (req, res) => {
-    const { otp, newpass, email } = req.body
+    const { otp, password, email } = req.body
+    console.log('change: ' + otp, password, email)
 
     userr = await User.findOne({ email })
-    console.log(userr.otp, otp)
+    console.log('normal' + userr.otp, otp)
 
     const salt = await bcrypt.genSalt(10);
-    const new_hashed_pass = await bcrypt.hash(req.body.newpass, salt);
+    const new_hashed_pass = await bcrypt.hash(req.body.password, salt);
 
     if (otp == userr.otp) {
 
@@ -158,19 +166,24 @@ router.get('/myprofile', verify, async (req, res) => {
 
     //DECODE TOKEN 
     const token = req.header("Authorization")
-    console.log(token)
     var decoded = jwt_decode(token)
+    // console.log(decoded)
 
-    await User.findById(decoded._id, (err, result) => {
+    await User.findById(decoded._id, async (err, result) => {
         if (err) return res.status(400).json(err)
 
-        //SEND CUSTOMER DETAIL/USER DETAILS
-        //TODO
 
-        res.status(200).json({
-            name: result.name,
-            contact: result.contact,
-            email: result.email
+        //SEND CUSTOMER DETAIL/USER DETAILS
+        await Customer.find({ email: result.email }, (err, success) => {
+            if (err) return res.status(400).json(err)
+
+            // if (!cus) return res.send("not doumnf")
+            res.status(200).json({
+                name: result.name,
+                contact: result.contact,
+                email: result.email,
+                customer: success
+            })
         })
     })
 
