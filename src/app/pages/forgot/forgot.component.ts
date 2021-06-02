@@ -14,11 +14,24 @@ export class ForgotComponent implements OnInit {
   passbool=false;
   errorMsg="";
   constructor(private fb: FormBuilder,private login: LoginService,private router: Router) { }
+  forgotemailForm = this.fb.group({
+    email: ['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+  });
 
   forgotuserForm = this.fb.group({
+    email: ['',[Validators.required,Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
+    otp: ['',[Validators.required,Validators.pattern("^[0-9]{6}$")]],
     password: ['',[Validators.required,Validators.pattern('(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:\{\\\}\\\[\\\]\\\|\\\+\\\-\\\=\\\_\\\)\\\(\\\)\\\`\\\/\\\\\\]])[A-Za-z0-9\d$@].{7,}')]],
     confirm: ['',Validators.required]
   });
+
+  sendotp(){
+    this.login.forgotemail(this.forgotuserForm.get('email').value)
+    .subscribe(
+      data => {console.log("Success!!!",data);},
+      error => {this.errorMsg=error.error;}
+    )
+  }
 
   confpass()
   {

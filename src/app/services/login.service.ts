@@ -15,7 +15,8 @@ export class LoginService {
   profileurl="http://localhost:8081/user/myprofile";
   login_url='http://localhost:8081/user/login';
   change_url='http://localhost:8081/user/changepass';
-  forgot_url='';
+  forgot_url='http://localhost:8081/user/reset-password';
+  forgot_email_url='http://localhost:8081/user/forgot-password';
   constructor(private http: HttpClient,public jwtHelper: JwtHelperService) { }
   check(login: Login)
   {
@@ -34,6 +35,12 @@ export class LoginService {
     .pipe(catchError(this.errorHandler))
   }
 
+  forgotemail(email)
+  {
+    return this.http.post<any>(this.forgot_email_url, email)
+    .pipe(catchError(this.errorHandler))
+  }
+
   storeUserData(token)
   {
     localStorage.setItem('id_token', token);
@@ -48,6 +55,8 @@ export class LoginService {
     return this.http.get<any>(this.profileurl,{headers: headers})
     .pipe(catchError(this.errorHandler))
   }
+
+
 
   changepassword(password)
   {

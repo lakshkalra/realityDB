@@ -16,6 +16,30 @@
               </div>        
   
     <!-- Email -->
+   <div class="d-flex justify-content-between align-items-center">
+    <div class="md-form">
+        <input mdbInput [class.is-invalid]="forgotuserForm.get('email').invalid && forgotuserForm.get('email').touched" required formControlName="email" type="text" id="form1" name="email" class="form-control">
+        <label for="form1" class="">Email</label>
+        <div *ngIf="forgotuserForm.get('email').invalid && forgotuserForm.get('email').touched" >
+          <small class="text-danger" *ngIf="forgotuserForm.get('email').errors?.required">This Field is required</small>
+          <small class="text-danger" *ngIf="forgotuserForm.get('email').errors.pattern">Enter a valid Email</small>
+        </div>
+    </div>
+    <small>
+        <button (click)="sendotp()" [disabled]="!forgotuserForm.get('email').valid" type="button" class="btn btn-primary btn-sm">Send OTP</button>
+        </small>  
+  </div>
+
+  <div class="md-form">
+    <input mdbInput formControlName="otp" [class.is-invalid]="forgotuserForm.get('otp').invalid && forgotuserForm.get('otp').touched" required type="tel" id="form1" name="otp" class="form-control">
+    <label for="form1" class="">Enter OTP</label>
+    <div *ngIf="forgotuserForm.get('otp').invalid && forgotuserForm.get('otp').touched" >
+        <small class="text-danger" *ngIf="forgotuserForm.get('otp').errors?.required">This Field is required</small>
+        <small class="text-danger" *ngIf="forgotuserForm.get('otp').errors.pattern">Enter a valid OTP</small>
+    </div>               
+</div>  
+
+
     <div class="md-form">
         <input mdbInput formControlName="password" [class.is-invalid]="forgotuserForm.get('password').invalid && forgotuserForm.get('password').touched" required type="password" id="form1" name="password" class="form-control">
         <label for="form1" class="">New Password</label>

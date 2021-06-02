@@ -6,6 +6,7 @@ import { LoginComponent } from '../app/pages/login/login.component';
 import { LandingComponent } from '../app/pages/landing/landing.component';
 import {DashboardComponent} from '../app/pages/dashboard/dashboard.component';
 import {AddpageComponent} from '../app/pages/addpage/addpage.component';
+import {ForgotComponent} from '../app/pages/forgot/forgot.component';
 import { AuthGuard } from './gaurds/auth.guard';
 import { AuthoritydashboardComponent } from '../app/pages/authoritydashboard/authoritydashboard.component'
  
@@ -19,6 +20,10 @@ const routes: Routes = [
   {
   path: 'home',
   component: LandingComponent
+  },
+  {
+    path: 'forgot',
+    component: ForgotComponent
   },
   {
     path: 'adduser',
