@@ -8,12 +8,14 @@ const nodemailer = require('nodemailer');
 const _ = require("lodash")
 const verify = require("./user_verification")
 const jwt_decode = require("jwt-decode")
+const Customer = require("../model/customer")
 
 
 const {
     user_register_validation,
     user_login_validation
 } = require("../validation/user_validation");
+const customer = require("../model/customer");
 
 //USER REGIATRATION
 router.post("/register", async (req, res) => {
@@ -67,7 +69,7 @@ router.post("/login", async (req, res) => {
 
     if (error) {
         console.log(error)
-        return res.status(400).send(error);
+        return res.status(400).json(error);
     }
     //CHECK IF USER EXIST 
 
@@ -161,6 +163,9 @@ router.get('/myprofile', verify, async (req, res) => {
 
     await User.findById(decoded._id, (err, result) => {
         if (err) return res.status(400).json(err)
+
+        //SEND CUSTOMER DETAIL/USER DETAILS
+        //TODO
 
         res.status(200).json({
             name: result.name,

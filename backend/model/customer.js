@@ -5,6 +5,10 @@ const customerSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    email: {
+        type: String,
+        require: true
+    },
     book_name: {
         type: String,
         required: true
