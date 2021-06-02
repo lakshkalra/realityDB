@@ -21,12 +21,12 @@ const user_register_validation = (data) => {
 //USER LOGIN VALIDATION
 const user_login_validation = (data) => {
     const schema = {
-        email: Joi.string()
+        email: Joi.string().email()
             .required(),
-        password: Joi.string()
-            .alphanum()
-            .min(8)
-            .required()
+        // password: Joi.string()
+        //     .alphanum()
+        //     .min(8)
+        //     .required()
     };
     return Joi.validate(data, schema);
 }

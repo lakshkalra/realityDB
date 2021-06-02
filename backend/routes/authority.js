@@ -3,9 +3,11 @@ const customer = require("../model/customer");
 const { findOne, findById } = require("../model/customer");
 const Customer = require("../model/customer")
 const router = require("express").Router();
+const verify = require("./user_verification")
+
 
 //ADDING NEW CUSTOMER
-router.post("/auth/add", async (req, res) => {
+router.post("/auth/add", verify, async (req, res) => {
 
     const { name, book_name, isbn, sales, royality, amount, withdrawal_amount } = req.body
 
@@ -42,7 +44,7 @@ router.post("/auth/add", async (req, res) => {
 })
 
 //GET ALL DETAILS
-router.get("/auth/info", async (req, res) => {
+router.get("/auth/info", verify, async (req, res) => {
     try {
         Customer.find({}, (err, results) => {
             res.json(results)
@@ -54,7 +56,7 @@ router.get("/auth/info", async (req, res) => {
 })
 
 //EDIT INFORMATION
-router.post("/auth/edit", async (req, res) => {
+router.post("/auth/edit", verify, async (req, res) => {
 
     const isbn = req.body.isbn
     custome = await Customer.findOne({ isbn })
