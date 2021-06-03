@@ -9,7 +9,9 @@ const cors = require("cors");
 const User_Route = require("./routes/user_auth");
 const authority = require("./routes/authority");
 
-dotenv.config();
+require('dotenv').config()
+// console.log(require('dotenv').config())
+// console.log(process.env.RAZORPAY_USERNAME)
 
 // CONNECT DB
 mongoose.connect(

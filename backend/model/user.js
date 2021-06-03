@@ -1,3 +1,5 @@
+const { json } = require("express");
+const { any, object, array } = require("joi");
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -18,10 +20,6 @@ const userSchema = new mongoose.Schema({
         required: true,
         min: 8
     },
-    resetLink: {
-        data: String,
-        default: ''
-    },
     otp: {
         data: Number,
         default: ''
@@ -29,6 +27,21 @@ const userSchema = new mongoose.Schema({
     type: {
         type: String,
         default: "User"
+    },
+    razor_contact: {
+        type: JSON,
+        default: ""
+    },
+    razor_fund: {
+        type: JSON,
+        default: ""
+    },
+    razorpay: {
+        contact: {
+            type: JSON,
+            required: true
+        },
+        funds: []
     },
     date: {
         type: Date,

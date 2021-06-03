@@ -1,4 +1,4 @@
-const { Router } = require("express")
+const { Router, response, json } = require("express")
 const User = require("../model/user")
 const router = require("express").Router();
 const bcrypt = require("bcryptjs")
@@ -9,6 +9,8 @@ const _ = require("lodash")
 const verify = require("./user_verification")
 const jwt_decode = require("jwt-decode")
 const Customer = require("../model/customer")
+const request = require('request');
+
 
 
 const {
@@ -19,7 +21,8 @@ const customer = require("../model/customer");
 
 //USER REGIATRATION
 router.post("/register", async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
+    // const { name, email, contact, password } = req.body
 
     //VALIDATING INFORMATION BEFORE REGISTRING USER
     const { error } = user_register_validation(req.body);
@@ -48,20 +51,46 @@ router.post("/register", async (req, res) => {
     const salt = await bcrypt.genSalt(10);
     const hashed_pass = await bcrypt.hash(req.body.password, salt);
 
-    //CREATING NEW USER
-    const user = new User({
-        name: req.body.name,
-        contact: req.body.contact,
-        email: req.body.email,
-        password: hashed_pass
-    });
+    const url = process.env.RAZORPAY_CONTACTID_URL
+    const razor_uname = process.env.RAZORPAY_USERNAME
+    const razor_pass = process.env.RAZORPAY_PASSWORD
+    var auth = 'Basic ' + Buffer.from(razor_uname + ':' + razor_pass).toString('base64');
 
-    try {
-        const saved_User = await user.save();
-        res.json({ user: user.email });
-    } catch (err) {
-        res.status(400).send(err);
-    }
+    //CREATING CONTACT_ID FOR RAZORPAY WITHDRAWAL/PAYOUT
+    const options = {
+        'method': 'POST',
+        'url': url,
+        'headers': {
+            'Authorization': auth,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "name": req.body.name, "email": req.body.email, "contact": req.body.contact, "type": "customer" })
+
+
+    };
+    request(options, async (error, response) => {
+        if (error) throw new Error('env' + error);
+        const obj = JSON.parse(response.body)
+
+        //SAVING THE USER TO USER_DB
+        const user = new User({
+            name: req.body.name,
+            contact: req.body.contact,
+            email: req.body.email,
+            password: hashed_pass,
+            razorpay: {
+                contact: obj
+            }
+
+        });
+
+        try {
+            const saved_User = await user.save();
+            res.json({ user: user.email });
+        } catch (err) {
+            res.status(400).send(err);
+        }
+    });
 })
 
 
@@ -103,7 +132,7 @@ router.post("/login", async (req, res) => {
 
 router.post("/forgot-password", async (req, res) => {
     const { email } = req.body;
-    console.log('forgot' + req.body)
+    // console.log('forgot' + req.body)
 
     otp = otpGen.generate(6, { upperCase: false, specialChars: false, alphabets: false });
 
@@ -145,10 +174,10 @@ router.post("/forgot-password", async (req, res) => {
 
 router.post('/reset-password', async (req, res) => {
     const { otp, password, email } = req.body
-    console.log('change: ' + otp, password, email)
+    // console.log('change: ' + otp, password, email)
 
     userr = await User.findOne({ email })
-    console.log('normal' + userr.otp, otp)
+    // console.log('normal' + userr.otp, otp)
 
     const salt = await bcrypt.genSalt(10);
     const new_hashed_pass = await bcrypt.hash(req.body.password, salt);
@@ -206,7 +235,7 @@ router.post('/changepass', verify, async (req, res) => {
 
     const { previous_password, new_password } = req.body
 
-    const token = req.header("auth-token")
+    const token = req.header("Authorization")
     var decoded = jwt_decode(token)
 
     await User.findById(decoded._id, async (err, result) => {
@@ -232,4 +261,153 @@ router.post('/changepass', verify, async (req, res) => {
 
 })
 
+
+
+router.get('/razorfundid', async (req, res) => {
+    //TOKEN DECODING
+    const token = req.header("Authorization")
+    const decoded = jwt_decode(token)
+
+    const user = await User.findById(decoded._id)
+    const fund_id = user.razorpay.funds
+    res.send(fund_id)
+})
+
+
+//CREATE RAZORPAY FUND_ID FOR BANK ACCOUNT AND UPI/VPA
+router.post('/razorfundid', async (req, res) => {
+    const { account_type, name, ifsc, account_number, upi } = req.body
+
+    if (!account_type) return res.status(400).json({ msg: "Invalid information! can not proceed further" })
+
+    if (account_type == "bank_account") {
+        if (!account_number || !name || !ifsc) {
+            return res.status(400).json({ msg: "Invalid information! can not proceed further" })
+        }
+
+        if (account_type == "vpa") {
+            if (!upi) {
+                return res.status(400).json({ msg: "Invalid information! can not proceed further" })
+            }
+
+        }
+    }
+    //TOKEN DECODING
+    const token = req.header("Authorization")
+    const decoded = jwt_decode(token)
+
+    const user = await User.findById(decoded._id)
+    // console.log(user)
+    const url = process.env.RAZORPAY_FUNDID_URL
+    const auth = 'Basic ' + Buffer.from(process.env.RAZORPAY_USERNAME + ':' + process.env.RAZORPAY_PASSWORD).toString('base64');
+    var options = {}
+
+    //CREATING FUND_ID OF CURRENT USER
+    if (account_type == "bank_account") {
+        options = {
+            'method': 'POST',
+            'url': url,
+            'headers': {
+                'Authorization': auth,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "contact_id": user.razorpay.contact.id, "account_type": account_type, "bank_account": { "name": name, "ifsc": ifsc, "account_number": account_number } })
+
+        };
+    }
+    else if (account_type == "vpa") {
+        options = {
+            'method': 'POST',
+            'url': url,
+            'headers': {
+                'Authorization': auth,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "account_type": "vpa", "contact_id": user.razorpay.contact.id, "vpa": { "address": "gaurav.kumar@exampleupi" } })
+
+        };
+    }
+    request(options, async (error, response) => {
+        if (error) return res.status(401).json(error);
+
+        const obj = JSON.parse(response.body)
+
+        const fund = await User.findOne({ name: user.name })
+
+        fund.razorpay.funds.push(obj)
+
+        const updated = await fund.save()
+        res.status(200).json('Successfully added')
+    });
+
+})
+
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// await User.findByIdAndUpdate(decoded._id, { fund__id: obj }, async (err, success) => {
+//     if (!err) return res.status(200).json(success)
+//     else return res.status(400).json(err)
+
+// })
+
+// const abc = await User.findById(decoded._id)
+
+// // abc.razorpay.funds[0] = JSON.parse(obj)
+// console.log("funds:" + JSON.parse(obj))
+// abc.save()
