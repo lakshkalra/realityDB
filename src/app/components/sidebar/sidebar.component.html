@@ -22,17 +22,29 @@
     <nav class="sidebar-menu pt-3 pb-3">
       <ul class="menu-items">
         <li >
-          <a routerLink="/dashboard" routerLinkActive="active">
+          <a *ngIf="usertype" routerLink="/dashboard" routerLinkActive="active">
             <i class="fa fa-tv"></i>
             <span>Dashboard</span>
           </a>
         </li>
         <li>
-          <a routerLink="/reschedule" routerLinkActive="active">
+          <a *ngIf="usertype" routerLink="/reschedule" routerLinkActive="active">
             <i class="fas fa-gem"></i>
             <span>Royality</span>
           </a>
         </li>
+        <li *ngIf="!usertype" > 
+          <a routerLink="/authdashboard" routerLinkActive="active">
+            <i class="fa fa-home"></i>
+            <span>Home</span>
+          </a>
+      </li>
+      <li *ngIf="!usertype">
+          <a routerLink="/adduser" routerLinkActive="active">
+            <i class="fa fa-user"></i>
+            <span>Add New Member</span>
+          </a>
+      </li>
         <li>
           <a href="#" routerLink="/myprofile" routerLinkActive="active">
             <i class="fa fa-user"></i>

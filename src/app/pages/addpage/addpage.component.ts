@@ -28,8 +28,7 @@ export class AddpageComponent implements OnInit {
     isbn:['',[Validators.required,Validators.pattern("^[0-9]{12}$")]],
     sales:['',[Validators.required,Validators.pattern("^[0-9]*$")]],
     royality: ['',[Validators.required,Validators.pattern("^[0-9]*$")]],
-    amount:['',[Validators.required,Validators.pattern("^[0-9]*$")]],
-    withdrawal_amount:['',[Validators.required,Validators.pattern("^[0-9]*$")]]
+    amount:['',[Validators.required,Validators.pattern("^[0-9]*$")]]
   });
   ngOnInit(): void {
   }

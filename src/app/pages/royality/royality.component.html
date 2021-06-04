@@ -1,33 +1,93 @@
-<div class="wrapper default-theme" [ngClass]="getClasses()">
-    <app-navbar></app-navbar>
-  <main>
-    <app-sidebar></app-sidebar>
-    <div class="pages container-fluid pt-4 pb-4 pl-4 pr-4 " id="hell">
-  <div>
+<button type="button" mdbBtn color="default" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
+  mdbWavesEffect>Launch Modal</button>
+
+<div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Payout Methods</p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+          <span aria-hidden="true" class="white-text">&times;</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="container text-center">
+            <div class="row">
+                <div class="col-md-6">
+                <button mdbBtn color="primary" class="waves-light" type="button" (click)="test.toggle()" mdbWavesEffect>
+                    Add UPI ID
+                  </button>
+                  
+                  <div class="" mdbCollapse #test="bs-collapse">
+                    <p>Enter Your UPI ID</p>
+                      <form class="text-center border border-light p-5">                      
+                      
+                        <!-- Email -->
+                        <div class="md-form">
+                            <input mdbInput required type="tel" id="form1" name="upi" class="form-control">
+                            <label for="form1" class="">Enter UPI ID</label>
+                        </div>  
+                        
+                        <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+
+                      </form>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                    <button mdbBtn color="primary" class="waves-light" type="button" (click)="test2.toggle()" mdbWavesEffect>
+                        Add New Bank Account
+                      </button>
+                      
+                      <div class="" mdbCollapse #test2="bs-collapse">
+                        <p>Enter Your Account Information</p>
+                        <form class="text-center border border-light p-5">                      
+                        
+                          <div class="md-form">
+                              <input mdbInput required type="tel" id="form1" name="upi" class="form-control">
+                              <label for="form1" class="">Enter Account Holder Name</label>
+                          </div>  
+                          <div class="md-form">
+                            <input mdbInput required type="tel" id="form1" name="upi" class="form-control">
+                            <label for="form1" class="">Enter Account Number</label>
+                         </div>
+                         <div class="md-form">
+                            <input mdbInput required type="tel" id="form1" name="upi" class="form-control">
+                            <label for="form1" class="">Enter IFSC code</label>
+                         </div>    
+
+                          
+                          <button type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
   
-    <h4 class="text-muted mb-4">Royality</h4>
-  
-       <div class="row">
-      <div class="col-md-12 mb-4 ">
-  
-        <div class="card border-0 rounded-0">
-          <div class="card-title mb-1 p-3 text-center">
-            <h5>Your Wallet</h5>
-          </div>
-          <div class="card-body">
-            <form>
-              <div class="form-group text-center">
-                <button type="button" mdbBtn color="primary" mdbWavesEffect>Transfer</button>
-              </div>
-            </form>
-          </div>
+                        </form>
+                      </div>
+                </div>
+
+            </div>  
+            <div class="row p-3">
+                <button class="accordion">Payout Account 1</button>
+                <div class="panel">
+                    <p>Type :- <small id="type">Bank Account</small></p>
+                    <p>Account Number :- <small id="accountno">220241135111</small></p>
+                    <p>Account Name :- Kartik Mehta</p>
+                </div>
+
+                <button class="accordion">Payout Account 2</button>
+                <div class="panel">
+                    <p>Type :- <small id="type">UPI</small></p>
+                    <p>UPI id :- <small id="accountno">1231@sbi.ok</small></p>
+                </div>
+
+            </div>     
         </div>
       </div>
+
     </div>
+    <!--/.Content-->
   </div>
-  <hr>
-    </div>
-    <div class="overlay" (click)="toggleSidebar()"></div>
-  </main>
-  </div>
-  
+</div>

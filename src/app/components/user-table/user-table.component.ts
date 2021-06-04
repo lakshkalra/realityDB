@@ -15,6 +15,8 @@ tabledata=[];
     this.tc.gettinginfo().subscribe(
       data=> {
         this.tabledata=data;  
+        console.log(data);
+        
       },
       error => {
           console.log("Error!",error);       

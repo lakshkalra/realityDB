@@ -14,12 +14,156 @@
                 <h5>Your Wallet</h5>
                 <h3 style="color: black;">Rs. 200</h3>
               </div>
-              <div class="card-body">
-                <form>
-                  <div class="form-group text-center">
-                    <button type="button" mdbBtn color="primary" mdbWavesEffect>Transfer</button>
+              <div class="card-body text-center">
+                <button type="button" mdbBtn class="btn btn-primary" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
+                mdbWavesEffect>Transfer</button>
+              
+              <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-notify modal-info" role="document">
+                  <!--Content-->
+                  <div class="modal-content">
+                    <!--Header-->
+                    <div class="modal-header">
+                      <p class="heading lead">Payout Methods</p>
+              
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="frame.hide()">
+                        <span aria-hidden="true" class="white-text">&times;</span>
+                      </button>
+                    </div>
+              
+                    <!--Body-->
+                    <div class="modal-body">
+                      <div class="container text-center">
+                          <div class="row">
+                              <div class="col-md-6">
+                              <button mdbBtn color="primary" class="waves-light" type="button" (click)="test.toggle()" mdbWavesEffect>
+                                  Add UPI ID
+                                </button>
+                                
+                                <div class="" mdbCollapse #test="bs-collapse">
+                                  <p>Enter Your UPI ID</p>
+                                    <form [formGroup]="addnewupiaccount" class="text-center border border-light p-5">                      
+                                    
+                                      <!-- Email -->
+                                      <div class="md-form">
+                                          <input mdbInput formControlName="address" [class.is-invalid]="addnewupiaccount.get('address').invalid && addnewupiaccount.get('address').touched" required type="tel" id="form1" name="upi" class="form-control">
+                                          <label for="form1" class="">Enter UPI ID</label>
+                                          <div *ngIf="addnewupiaccount.get('address').invalid && addnewupiaccount.get('address').touched" >
+                                            <small class="text-danger" *ngIf="addnewupiaccount.get('address').errors?.required">This Field is required</small>
+                                          </div>                             
+                                      </div>  
+                                      
+                                      <button [disabled]="!addnewupiaccount.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+              
+                                    </form>
+                                </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <button mdbBtn color="primary" class="waves-light" type="button" (click)="test2.toggle()" mdbWavesEffect>
+                                      Add New Bank Account
+                                    </button>
+                                    
+                                    <div class="" mdbCollapse #test2="bs-collapse">
+                                      <p>Enter Your Account Information</p>
+                                      <form [formGroup]="addnewbankaccount" class="text-center border border-light p-5">                      
+                                      
+                                        <div class="md-form">
+                                            <input formControlName="name" [class.is-invalid]="addnewbankaccount.get('name').invalid && addnewbankaccount.get('name').touched" mdbInput required type="tel" id="form1" name="upi" class="form-control">
+                                            <label for="form1" class="">Enter Account Holder Name</label>
+                                            <div *ngIf="addnewbankaccount.get('name').invalid && addnewbankaccount.get('name').touched" >
+                                              <small class="text-danger" *ngIf="addnewbankaccount.get('name').errors?.required">This Field is required</small>
+                                            </div>                               
+                                        </div>  
+                                        <div class="md-form">
+                                          <input formControlName="account_number" [class.is-invalid]="addnewbankaccount.get('account_number').invalid && addnewbankaccount.get('account_number').touched" mdbInput required type="tel" id="form1" name="upi" class="form-control">
+                                          <label for="form1" class="">Enter Account Number</label>
+                                          <div *ngIf="addnewbankaccount.get('account_number').invalid && addnewbankaccount.get('account_number').touched" >
+                                            <small class="text-danger" *ngIf="addnewbankaccount.get('account_number').errors?.required">This Field is required</small>
+                                          </div>                               
+                                       </div>
+                                       <div class="md-form">
+                                          <input formControlName="ifsc" mdbInput required [class.is-invalid]="addnewbankaccount.get('ifsc').invalid && addnewbankaccount.get('ifsc').touched" type="tel" id="form1" name="upi" class="form-control">
+                                          <label for="form1" class="">Enter IFSC code</label>
+                                          <div *ngIf="addnewbankaccount.get('ifsc').invalid && addnewbankaccount.get('ifsc').touched" >
+                                            <small class="text-danger" *ngIf="addnewbankaccount.get('ifsc').errors?.required">This Field is required</small>
+                                          </div>                               
+                                       </div>    
+              
+                                        
+                                        <button type="button" [disabled]="!addnewbankaccount.valid" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+                
+                                      </form>
+                                    </div>
+                              </div>
+              
+                          </div>  
+                          <div class="row p-3" *ngFor="let test of existingfund">
+                            <button *ngIf="test.account_type=='bank_account'" block="true" mdbBtn class="accordion" type="button" (click)="test3.toggle()">
+                             Existing Payouts
+                            </button>
+                            <div class="" mdbCollapse #test3="bs-collapse">
+                              <p>Bank Name: {{test.bank_name}}</p>
+                              <p>Account Holder Name: {{test.name}}</p>
+                              <p>Account Number: {{test.account_number}}</p>
+                              <p>Account Number: {{test.ifsc}}</p>
+                              <form [formGroup]="amountbankForm" class="text-center">                      
+                                    
+                                <!-- Email -->
+                                <div class="md-form">
+                                    <input mdbInput formControlName="amount" [class.is-invalid]="amountbankForm.get('amount').invalid && amountbankForm.get('amount').touched" required type="tel" id="form1" name="amount" class="form-control">
+                                    <label for="form1" class="">Enter Amount</label>
+                                    <div *ngIf="amountbankForm.get('amount').invalid && amountbankForm.get('amount').touched" >
+                                      <small class="text-danger" *ngIf="amountbankForm.get('amount').errors?.required">This Field is required</small>
+                                    </div>                            
+                                </div>  
+                                <p>Select The Mode of Payment</p>
+                                <select formControlName="mode" class="browser-default custom-select">
+                                  <option value="NEFT">NEFT</option>
+                                  <option value="RTGS">RTGS</option>
+                                  <option value="IMPS">IMPS</option>
+                                </select>
+                                
+                                <button (click)="SendingFundid(test.id,amountbankForm.get('amount').value,amountbankForm.get('mode').value)" [disabled]="!amountbankForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+        
+                              </form>
+
+                            </div>
+
+                            <button *ngIf="test.account_type=='vpa'" block="true" mdbBtn class="accordion" type="button" (click)="test4.toggle()">
+                              Existing Payouts
+                             </button>
+                             <div class="" mdbCollapse #test4="bs-collapse">
+                               <p>Username: {{test.username}}</p>
+                               <p>UPI Number: {{test.address}}</p>
+
+                               <form [formGroup]="amountupiForm" class="text-center">                      
+                                    
+                                <!-- Email -->
+                                <div class="md-form">
+                                    <input mdbInput formControlName="amount" [class.is-invalid]="amountupiForm.get('amount').invalid && amountupiForm.get('amount').touched" required type="tel" id="form1" name="amount" class="form-control">
+                                    <label for="form1" class="">Enter Amount</label>
+                                    <div *ngIf="amountupiForm.get('amount').invalid && amountupiForm.get('amount').touched" >
+                                      <small class="text-danger" *ngIf="amountupiForm.get('amount').errors?.required">This Field is required</small>
+                                    </div>                            
+                                </div>  
+                                
+                                <button (click)="SendingFundidupi(test.id,amountupiForm.get('amount').value)" [disabled]="!amountupiForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+        
+                              </form>
+  
+                             </div>
+
+
+
+                          </div>     
+                      </div>
+                    </div>
+              
                   </div>
-                </form>
+                  <!--/.Content-->
+                </div>
+              </div>
               </div>
             </div>
           </div>

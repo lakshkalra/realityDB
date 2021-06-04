@@ -4,6 +4,7 @@ import {JwtHelperService} from '@auth0/angular-jwt';
 import { Login } from './login';
 import { catchError } from 'rxjs/operators';
 import { throwError} from 'rxjs';
+import { promise } from 'selenium-webdriver';
 
 
 @Injectable({
@@ -55,7 +56,7 @@ export class LoginService {
     let headers= new HttpHeaders({
       'Authorization':this.authtoken
     });
-    return this.http.get<any>(this.profileurl,{headers: headers})
+    return  this.http.get<any>(this.profileurl,{headers: headers})
     .pipe(catchError(this.errorHandler))
   }
 

@@ -14,9 +14,9 @@
                             <div class="card-body"  *ngIf="this.usertype">
                                 <div class="d-flex flex-column align-items-center text-center">
                                     <div class="mt-3">
-                                        <h4>{{user.name}}</h4>
+                                        <h4 id="profile-name-card">{{user.name}}</h4>
                                         <p class="text-secondary mb-1">Wallet: Rs 100</p>
-                                        <button class="btn btn-primary">Transfer</button>
+                                        <button id="card1" (click)="handleCard($event)" class="btn btn-primary">Transfer</button>
                                     </div>
                                 </div>
                                 <hr class="my-4">
@@ -38,7 +38,7 @@
                 <div class="col-lg-12">
                     <div class="card">
                         <div class="card-title mb-1 p-3 d-flex text-center">
-                            <h6>{{user.name}} Profile</h6>
+                            <h6 id="getusername">{{user.name}} Profile</h6>
                           </div>
                           <div class="alert alert-danger" *ngIf="errorMsg">
                             {{errorMsg}}

@@ -12,8 +12,16 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 
   constructor(public auth: LoginService,private router: Router) { }
-
+usertype:boolean;
   ngOnInit(): void {
+    if(this.auth.type=="User"){
+      this.usertype=true;
+    }        
+    else if(this.auth.type=="Authority")
+    {
+      this.usertype=false;
+    }
+
   }
 
 

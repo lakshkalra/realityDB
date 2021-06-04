@@ -42,16 +42,17 @@ export class ProfileComponent implements OnInit {
 
 usertype:boolean;
   ngOnInit(): void {
+    if(this.auth.type=="User"){
+      this.usertype=true;
+    }        
+    else if(this.auth.type=="Authority")
+    {
+      this.usertype=false;
+    }
+
 
     this.auth.getProfile().subscribe(
       data => {        
-        if(this.auth.type=="User"){
-          this.usertype=true;
-        }        
-        else if(this.auth.type=="Authority")
-        {
-          this.usertype=false;
-        }
         this.user = data;
         this.changeprofileForm.get('name').setValue(this.user.name);
         this.changeprofileForm.get('email').setValue(this.user.email);
@@ -60,10 +61,18 @@ usertype:boolean;
       error => {
         console.log("Error!", error);
       }
-    )
-
-    
+    )    
   }
+
+handleCard(event:any)
+{
+  console.log(document.getElementById("profile-name-card").innerHTML);
+  
+
+  console.log(event.target);
+
+  // post request => 
+}
   onSubmit() {
     this.auth.changeinfouser(this.changeprofileForm.value)
       .subscribe(
