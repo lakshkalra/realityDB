@@ -64,15 +64,7 @@ usertype:boolean;
     )    
   }
 
-handleCard(event:any)
-{
-  console.log(document.getElementById("profile-name-card").innerHTML);
-  
 
-  console.log(event.target);
-
-  // post request => 
-}
   onSubmit() {
     this.auth.changeinfouser(this.changeprofileForm.value)
       .subscribe(
