@@ -9,9 +9,6 @@ import { AppService } from 'src/app/services/app.service';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  bookings = "";
-  totalPrice = "";
-  buses = '';
   users: any;
   existingfund = [];
   sendamountdata = {
@@ -19,6 +16,7 @@ export class DashboardComponent implements OnInit {
     fund_id: "",
     mode: ""
   }
+  errorMsg="";
   addnew = {};
 
   constructor(private appService: AppService,
@@ -69,7 +67,6 @@ export class DashboardComponent implements OnInit {
           }
 
         });
-        console.log(this.existingfund);
 
 
       },
@@ -112,6 +109,7 @@ export class DashboardComponent implements OnInit {
       },
       error => {
         console.log("Error", error);
+        this.errorMsg=error.error;
       }
     )
 
@@ -127,6 +125,7 @@ export class DashboardComponent implements OnInit {
       },
       error => {
         console.log("Error", error);
+        this.errorMsg=error.error;
       }
     )
   }
@@ -141,7 +140,7 @@ export class DashboardComponent implements OnInit {
       },
       error => {
         console.log(Error, error);
-
+        this.errorMsg=error.error;
       }
     )
   }
@@ -155,7 +154,7 @@ export class DashboardComponent implements OnInit {
       },
       error => {
         console.log(Error, error);
-
+        this.errorMsg=error.error;
       }
     )
   }
