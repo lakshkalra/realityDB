@@ -12,7 +12,7 @@
             <div class="card border-0 rounded-0">
               <div class="card-title mb-1 p-3 text-center">
                 <h5>Your Wallet</h5>
-                <h3 style="color: black;">Rs. 200</h3>
+                <h3 style="color: black;">Rs. {{users.customer[0].amount}}</h3>
               </div>
               <div class="card-body text-center">
                 <button type="button" mdbBtn class="btn btn-primary" rounded="true" data-toggle="modal" data-target="#basicExample" (click)="frame.show()"
@@ -171,7 +171,7 @@
       
         <div class="row">
       
-          <div class="col-md-6 col-lg-3 mb-4">
+          <div class="col-md-6 col-lg-4 mb-4">
             <div class="card border-0 rounded-0">
               <div class="card-body">
                 <div class="card-innerBody d-flex align-items-center">
@@ -180,14 +180,14 @@
                   </div>
                   <div class="ml-auto">
                     <p class="card-label text-right text-muted">Total Sales</p>
-                    <h4 class="card-text text-right ">{{totalPrice}}</h4>
+                    <h4 class="card-text text-right ">{{users.customer[0].sales}}</h4>
                   </div>
                 </div>
               </div>
             </div>
           </div>
       
-          <div class="col-md-6 col-lg-3 mb-4">
+          <div class="col-md-6 col-lg-4 mb-4">
             <div class="card border-0 rounded-0">
               <div class="card-body">
                 <div class="card-innerBody d-flex align-items-center">
@@ -196,30 +196,15 @@
                   </div>
                   <div class="ml-auto">
                     <p class="card-label text-right text-muted">Royality</p>
-                    <h4 class="card-text text-right ">{{bookings}}</h4>
+                    <h4 class="card-text text-right ">{{users.customer[0].royality}}</h4>
                   </div>
                 </div>
               </div>
             </div>
           </div>
       
-          <div class="col-md-6 col-lg-3 mb-4">
-            <div class="card border-0 rounded-0">
-              <div class="card-body">
-                <div class="card-innerBody d-flex align-items-center">
-                  <div class="card-icon text-light">
-                    <i class="fa fa-book" aria-hidden="true"></i>
-                  </div>
-                  <div class="ml-auto">
-                    <p class="card-label text-right text-muted">Total Books</p>
-                    <h4 class="card-text text-right ">{{users}}</h4>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
       
-          <div class="col-md-6 col-lg-3 mb-4">
+          <div class="col-md-6 col-lg-4 mb-4">
             <div class="card border-0 rounded-0">
               <div class="card-body">
                 <div class="card-innerBody d-flex align-items-center">
@@ -227,8 +212,8 @@
                     <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
                   </div>
                   <div class="ml-auto">
-                    <p class="card-label text-right text-muted">Misc</p>
-                    <h4 class="card-text text-right ">{{buses}}</h4>
+                    <p class="card-label text-right text-muted">Amount</p>
+                    <h4 class="card-text text-right ">{{users.customer[0].amount}}</h4>
                   </div>
                 </div>
               </div>

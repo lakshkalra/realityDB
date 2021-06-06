@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import {PaymentService} from '../../services/payment.service';
+import { LoginService } from '../../services/login.service';
 import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-dashboard',
@@ -11,17 +12,19 @@ export class DashboardComponent implements OnInit {
   bookings="";
   totalPrice="";
   buses='';
-  users="";
+  users: any;
   existingfund=[];
   sendamountdata={
     amount:"",
     id:"",
     mode:""
   }
-
   addnew={};
 
-  constructor(private appService: AppService, private fb: FormBuilder, private paymentservice: PaymentService) {}
+  constructor(private appService: AppService,
+     private fb: FormBuilder,
+      private paymentservice: PaymentService,
+      private authservice: LoginService) {}
   getClasses() {
     const classes = {
       'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
@@ -35,6 +38,19 @@ export class DashboardComponent implements OnInit {
 
 
   ngOnInit() {
+
+
+    this.authservice.getProfile().subscribe(
+      data=>{
+        console.log(data);
+        this.users=data;        
+      },
+      error=>{
+        console.log("Error",error);
+        
+      }
+    )
+
     this.amountbankForm.get('mode').setValue('NEFT');
     this.paymentservice.getPaymentinfo().subscribe(
       data=>{
@@ -53,7 +69,6 @@ export class DashboardComponent implements OnInit {
           }
           
         });
-        console.log(this.existingfund);
         
       },
       error=>

@@ -13,6 +13,7 @@ export class SidebarComponent implements OnInit {
 
   constructor(public auth: LoginService,private router: Router) { }
 usertype:boolean;
+user:any;
   ngOnInit(): void {
     if(this.auth.type=="User"){
       this.usertype=true;
@@ -21,6 +22,11 @@ usertype:boolean;
     {
       this.usertype=false;
     }
+    this.auth.getProfile().subscribe(
+      data=>{
+        this.user=data;
+      }
+    )
 
   }
 
