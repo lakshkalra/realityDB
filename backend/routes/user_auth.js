@@ -263,7 +263,7 @@ router.post('/changepass', verify, async (req, res) => {
 
 
 
-router.get('/razorfundid', async (req, res) => {
+router.get('/razorfundid', verify, async (req, res) => {
     //TOKEN DECODING
     const token = req.header("Authorization")
     const decoded = jwt_decode(token)
@@ -275,7 +275,7 @@ router.get('/razorfundid', async (req, res) => {
 
 
 //CREATE RAZORPAY FUND_ID FOR BANK ACCOUNT AND UPI/VPA
-router.post('/razorfundid', async (req, res) => {
+router.post('/razorfundid', verify, async (req, res) => {
     const { account_type, name, ifsc, account_number, upi } = req.body
 
     if (!account_type) return res.status(400).json({ msg: "Invalid information! can not proceed further" })
@@ -297,7 +297,7 @@ router.post('/razorfundid', async (req, res) => {
     const decoded = jwt_decode(token)
 
     const user = await User.findById(decoded._id)
-    // console.log(user)
+
     const url = process.env.RAZORPAY_FUNDID_URL
     const auth = 'Basic ' + Buffer.from(process.env.RAZORPAY_USERNAME + ':' + process.env.RAZORPAY_PASSWORD).toString('base64');
     var options = {}
@@ -338,6 +338,58 @@ router.post('/razorfundid', async (req, res) => {
 
         const updated = await fund.save()
         res.status(200).json('Successfully added')
+    });
+
+})
+
+router.post('/razorpayout', verify, async (req, res) => {
+
+
+    const { fund_id, amount, mode } = req.body
+
+    console.log(req.body)
+
+    if (!fund_id || !amount) return res.status(400).json({ msg: "Invalid information! can not proceed further" })
+
+    //TOKEN DECODING
+    const token = req.header("Authorization")
+    const decoded = jwt_decode(token)
+
+    const user = await User.findById(decoded._id)
+
+    //CHECKING AMOUNT IS NOT GREATER THEN ROYALTY
+    const customer = await Customer.findOne({ email: user.email })
+
+    if (customer.royality < amount) return res.status(400).send("Not enough fund in wallet.")
+
+    const url = process.env.RAZORPAY_PAYOUT_URL
+    const auth = 'Basic ' + Buffer.from(process.env.RAZORPAY_USERNAME + ':' + process.env.RAZORPAY_PASSWORD).toString('base64');
+    const acc_number = (process.env.RAZORPAY_ACCOUNT_NUMBER)
+
+    console.log('acc:  ' + typeof (mode))
+
+    var options = {
+        'method': 'POST',
+        'url': url,
+        'headers': {
+            'Authorization': auth,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ "account_number": acc_number, "fund_account_id": fund_id, "amount": amount * 100, "currency": "INR", "mode": mode, "purpose": "payout", "queue_if_low_balance": false })
+
+    };
+    request(options, async (error, response) => {
+        if (error) throw new Error(error);
+
+        const withdrawals = await User.findOne({ name: user.name })
+
+        withdrawals.razorpay.withdrawal_history.push(JSON.parse(response.body))
+
+        await Customer.findOneAndUpdate({ email: user.email }, { withdrawal_amount: customer.withdrawal_amount + amount, royality: customer.royality - amount })
+
+        const updated = await withdrawals.save()
+        res.send(updated)
+
     });
 
 })

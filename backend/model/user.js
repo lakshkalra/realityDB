@@ -41,8 +41,10 @@ const userSchema = new mongoose.Schema({
             type: JSON,
             required: true
         },
-        funds: []
+        funds: [],
+        withdrawal_history: []
     },
+
     date: {
         type: Date,
         default: Date.now
