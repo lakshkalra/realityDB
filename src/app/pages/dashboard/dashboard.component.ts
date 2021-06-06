@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   existingfund=[];
   sendamountdata={
     amount:"",
-    id:"",
+    fund_id:"",
     mode:""
   }
   addnew={};
@@ -58,12 +58,12 @@ export class DashboardComponent implements OnInit {
           // console.log(element);
           
           if(element.account_type=="bank_account"){
-            element.bank_account["id"]=element.id;
+            element.bank_account["fund_id"]=element.id;
             element.bank_account["account_type"]="bank_account";
             this.existingfund.push(element.bank_account);
           }
           else{
-            element.vpa["id"]=element.id;
+            element.vpa["fund_id"]=element.id;
             element.vpa["account_type"]="vpa";
             this.existingfund.push(element.vpa);
           }
@@ -98,8 +98,8 @@ export class DashboardComponent implements OnInit {
   addnewupiaccount = this.fb.group({
     address: ['', [Validators.required]],
   });
-  SendingFundid(id,amount,mode){
-    this.sendamountdata.id=id;
+  SendingFundid(fund_id,amount,mode){
+    this.sendamountdata.fund_id=fund_id;
     this.sendamountdata.amount=amount;
     this.sendamountdata.mode=mode;
     this.paymentservice.existing(this.sendamountdata).subscribe(
@@ -113,8 +113,8 @@ export class DashboardComponent implements OnInit {
 
   }
  
-   SendingFundidupi(id,amount){
-    this.sendamountdata.id=id;
+   SendingFundidupi(fund_id,amount){
+    this.sendamountdata.fund_id=fund_id;
     this.sendamountdata.amount=amount;
     this.sendamountdata.mode="UPI";
     this.paymentservice.existing(this.sendamountdata).subscribe(

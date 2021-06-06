@@ -124,7 +124,7 @@
                                   <option value="IMPS">IMPS</option>
                                 </select>
                                 
-                                <button (click)="SendingFundid(test.id,amountbankForm.get('amount').value,amountbankForm.get('mode').value)" [disabled]="!amountbankForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+                                <button (click)="SendingFundid(test.id,amountbankForm.get('amount').value,amountbankForm.get('mode').value)" [disabled]="!amountbankForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Transfer</button>  
         
                               </form>
 
@@ -148,7 +148,7 @@
                                     </div>                            
                                 </div>  
                                 
-                                <button (click)="SendingFundidupi(test.id,amountupiForm.get('amount').value)" [disabled]="!amountupiForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Add UPI</button>  
+                                <button (click)="SendingFundidupi(test.id,amountupiForm.get('amount').value)" [disabled]="!amountupiForm.valid" type="button" type="submit" mdbBtn color="primary" mdbWavesEffect>Transfer</button>  
         
                               </form>
   
