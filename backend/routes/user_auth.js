@@ -276,27 +276,37 @@ router.get('/razorfundid', verify, async (req, res) => {
 
 //CREATE RAZORPAY FUND_ID FOR BANK ACCOUNT AND UPI/VPA
 router.post('/razorfundid', verify, async (req, res) => {
-    const { account_type, name, ifsc, account_number, upi } = req.body
+    const { account_type, name, ifsc, account_number, address } = req.body
 
+    const upi = address
     if (!account_type) return res.status(400).json({ msg: "Invalid information! can not proceed further" })
 
-    if (account_type == "bank_account") {
-        if (!account_number || !name || !ifsc) {
-            return res.status(400).json({ msg: "Invalid information! can not proceed further" })
-        }
-
-        if (account_type == "vpa") {
-            if (!upi) {
-                return res.status(400).json({ msg: "Invalid information! can not proceed further" })
-            }
-
-        }
-    }
     //TOKEN DECODING
     const token = req.header("Authorization")
     const decoded = jwt_decode(token)
 
     const user = await User.findById(decoded._id)
+
+
+    if (account_type == "bank_account") {
+        if (!account_number || !name || !ifsc) {
+            return res.status(400).json({ msg: "Invalid information! can not proceed further" })
+        }
+        TODO//
+        //CONFIRMING THAT USER IS NOT MAKING A DUPLICATE FUNDID WITH SAME ACCOUNT NUMBER
+        for (i in user.razorpay.funds) {
+            console.log('i' + "    " + i + "   " + (user.razorpay.funds[i]))
+        }
+
+    }
+
+    if (account_type == "vpa") {
+        if (!upi) {
+            return res.status(400).json({ msg: "Invalid information! can not proceed further" })
+        }
+
+    }
+
 
     const url = process.env.RAZORPAY_FUNDID_URL
     const auth = 'Basic ' + Buffer.from(process.env.RAZORPAY_USERNAME + ':' + process.env.RAZORPAY_PASSWORD).toString('base64');
@@ -323,7 +333,7 @@ router.post('/razorfundid', verify, async (req, res) => {
                 'Authorization': auth,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "account_type": "vpa", "contact_id": user.razorpay.contact.id, "vpa": { "address": "gaurav.kumar@exampleupi" } })
+            body: JSON.stringify({ "account_type": "vpa", "contact_id": user.razorpay.contact.id, "vpa": { "address": upi } })
 
         };
     }
@@ -346,8 +356,8 @@ router.post('/razorpayout', verify, async (req, res) => {
 
 
     const { fund_id, amount, mode } = req.body
-
-    console.log(req.body)
+    const Amount = parseInt(amount)
+    console.log(typeof (Amount))
 
     if (!fund_id || !amount) return res.status(400).json({ msg: "Invalid information! can not proceed further" })
 
@@ -360,13 +370,13 @@ router.post('/razorpayout', verify, async (req, res) => {
     //CHECKING AMOUNT IS NOT GREATER THEN ROYALTY
     const customer = await Customer.findOne({ email: user.email })
 
-    if (customer.royality < amount) return res.status(400).send("Not enough fund in wallet.")
+    if (customer.amount < Amount) return res.status(400).send("Not enough fund in wallet.")
 
     const url = process.env.RAZORPAY_PAYOUT_URL
     const auth = 'Basic ' + Buffer.from(process.env.RAZORPAY_USERNAME + ':' + process.env.RAZORPAY_PASSWORD).toString('base64');
     const acc_number = (process.env.RAZORPAY_ACCOUNT_NUMBER)
 
-    console.log('acc:  ' + typeof (mode))
+    // console.log('acc:  ' + typeof (mode))
 
     var options = {
         'method': 'POST',
@@ -375,7 +385,7 @@ router.post('/razorpayout', verify, async (req, res) => {
             'Authorization': auth,
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ "account_number": acc_number, "fund_account_id": fund_id, "amount": amount * 100, "currency": "INR", "mode": mode, "purpose": "payout", "queue_if_low_balance": false })
+        body: JSON.stringify({ "account_number": acc_number, "fund_account_id": fund_id, "amount": Amount * 100, "currency": "INR", "mode": mode, "purpose": "payout", "queue_if_low_balance": false })
 
     };
     request(options, async (error, response) => {
@@ -385,7 +395,7 @@ router.post('/razorpayout', verify, async (req, res) => {
 
         withdrawals.razorpay.withdrawal_history.push(JSON.parse(response.body))
 
-        await Customer.findOneAndUpdate({ email: user.email }, { withdrawal_amount: customer.withdrawal_amount + amount, royality: customer.royality - amount })
+        await Customer.findOneAndUpdate({ email: user.email }, { withdrawal_amount: customer.withdrawal_amount + Amount, amount: customer.amount - Amount })
 
         const updated = await withdrawals.save()
         res.send(updated)
