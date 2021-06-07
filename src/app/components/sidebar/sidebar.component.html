@@ -13,7 +13,7 @@
           <h3 style="font-family: cursive;">Hello!!!</h3>
       </div>
       <div class="profile-details text-center pb-4">
-        <p class="mb-0 text-uppercase name">John Doe</p>
+        <p class="mb-0 text-uppercase name">{{user.name}}</p>
       </div>
     </div>
     <div class="sidebar-search pt-1 pb-1 pl-3 pr-3">
@@ -25,12 +25,6 @@
           <a *ngIf="usertype" routerLink="/dashboard" routerLinkActive="active">
             <i class="fa fa-tv"></i>
             <span>Dashboard</span>
-          </a>
-        </li>
-        <li>
-          <a *ngIf="usertype" routerLink="/reschedule" routerLinkActive="active">
-            <i class="fas fa-gem"></i>
-            <span>Royality</span>
           </a>
         </li>
         <li *ngIf="!usertype" > 

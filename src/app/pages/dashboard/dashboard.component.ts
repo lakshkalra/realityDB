@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
 import { LoginService } from '../../services/login.service';
 import { AppService } from 'src/app/services/app.service';
@@ -22,7 +23,8 @@ export class DashboardComponent implements OnInit {
   constructor(private appService: AppService,
     private fb: FormBuilder,
     private paymentservice: PaymentService,
-    private authservice: LoginService) { }
+    private authservice: LoginService,
+    private router: Router) { }
   getClasses() {
     const classes = {
       'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
@@ -40,7 +42,6 @@ export class DashboardComponent implements OnInit {
 
     this.authservice.getProfile().subscribe(
       data => {
-        console.log(data);
         this.users = data;
       },
       error => {
@@ -105,11 +106,8 @@ export class DashboardComponent implements OnInit {
 
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
-        console.log("Success", data);
       },
       error => {
-        console.log("Error", error);
-        this.errorMsg=error.error;
       }
     )
 
@@ -121,10 +119,8 @@ export class DashboardComponent implements OnInit {
     this.sendamountdata.mode = "UPI";
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
-        console.log("Success", data);
       },
       error => {
-        console.log("Error", error);
         this.errorMsg=error.error;
       }
     )
@@ -136,10 +132,9 @@ export class DashboardComponent implements OnInit {
     this.addnew["account_type"] = "bank_account";
     this.paymentservice.new(this.addnew).subscribe(
       data => {
-        console.log("Success", data);
+        this.router.navigate(['/dashboard']);
       },
       error => {
-        console.log(Error, error);
         this.errorMsg=error.error;
       }
     )
@@ -150,10 +145,9 @@ export class DashboardComponent implements OnInit {
     this.addnew["account_type"] = "vpa";
     this.paymentservice.new(this.addnew).subscribe(
       data => {
-        console.log("Success", data);
+        this.router.navigate(['/dashboard']);
       },
       error => {
-        console.log(Error, error);
         this.errorMsg=error.error;
       }
     )

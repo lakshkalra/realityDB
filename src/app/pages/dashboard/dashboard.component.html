@@ -20,7 +20,7 @@
 
                 <div mdbModal #frame="mdbModal" class="modal fade top" id="frameModalTop" tabindex="-1" role="dialog"
                   aria-labelledby="myModalLabel" aria-hidden="true">
-                  <div class="modal-dialog modal-lg modal-notify modal-info" role="document">
+                  <div class="modal-dialog modal-dialog-scrollable modal-lg modal-notify modal-info" role="document">
                     <!--Content-->
                     <div class="modal-content">
                       <!--Header-->
@@ -223,7 +223,7 @@
 
         <div class="row">
 
-          <div class="col-md-6 col-lg-4 mb-4">
+          <div class="col-md-6 col-lg-3 mb-4">
             <div class="card border-0 rounded-0">
               <div class="card-body">
                 <div class="card-innerBody d-flex align-items-center">
@@ -239,7 +239,7 @@
             </div>
           </div>
 
-          <div class="col-md-6 col-lg-4 mb-4">
+          <div class="col-md-6 col-lg-3 mb-4">
             <div class="card border-0 rounded-0">
               <div class="card-body">
                 <div class="card-innerBody d-flex align-items-center">
@@ -256,21 +256,38 @@
           </div>
 
 
-          <div class="col-md-6 col-lg-4 mb-4">
+          <div class="col-md-6 col-lg-3 mb-4">
             <div class="card border-0 rounded-0">
               <div class="card-body">
                 <div class="card-innerBody d-flex align-items-center">
                   <div class="card-icon text-light">
-                    <i class="fa fa-ellipsis-h" aria-hidden="true"></i>
+                    <i class="fa fa-book" aria-hidden="true"></i>
                   </div>
                   <div class="ml-auto">
-                    <p class="card-label text-right text-muted">Amount</p>
-                    <h4 class="card-text text-right ">{{users.customer[0].amount}}</h4>
+                    <p class="card-label text-right text-muted">Book Name</p>
+                    <h4 class="card-text text-right ">{{users.customer[0].book_name}}</h4>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+
+          <div class="col-md-6 col-lg-3 mb-4">
+            <div class="card border-0 rounded-0">
+              <div class="card-body">
+                <div class="card-innerBody d-flex align-items-center">
+                  <div class="card-icon text-light">
+                    <i class="fas fa-rupee-sign" aria-hidden="true"></i>
+                  </div>
+                  <div class="ml-auto">
+                    <p class="card-label text-right text-muted">Withdrawal Amount</p>
+                    <h4 class="card-text text-right ">{{users.customer[0].withdrawal_amount}}</h4>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
 
         </div>
 
