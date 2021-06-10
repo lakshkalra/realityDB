@@ -42,18 +42,20 @@ export class ProfileComponent implements OnInit {
 
 usertype:boolean;
   ngOnInit(): void {
-    if(this.auth.type=="User"){
-      this.usertype=true;
-    }        
-    else if(this.auth.type=="Authority")
-    {
-      this.usertype=false;
-    }
 
 
     this.auth.getProfile().subscribe(
-      data => {        
+      data => {
+        if(this.auth.type=="User"){
+          this.usertype=true;
+        }        
+        else if(this.auth.type=="Authority")
+        {
+          this.usertype=false;
+        }
+            
         this.user = data;
+        
         this.changeprofileForm.get('name').setValue(this.user.name);
         this.changeprofileForm.get('email').setValue(this.user.email);
         this.changeprofileForm.get('contact').setValue(this.user.contact);

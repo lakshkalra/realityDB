@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { AppService } from 'src/app/services/app.service';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { TablechangeService } from '../../services/tablechange.service';
 
 
@@ -12,7 +13,11 @@ import { TablechangeService } from '../../services/tablechange.service';
 })
 export class AuthoritydashboardComponent implements OnInit {
 
-  constructor(private router: Router,private appService: AppService,private fb: FormBuilder,private tc: TablechangeService) {}
+  constructor(private router: Router,
+    private toastr: ToastrService,
+    private appService: AppService,
+    private fb: FormBuilder,
+    private tc: TablechangeService) {}
   getClasses() {
     const classes = {
       'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
@@ -44,7 +49,9 @@ export class AuthoritydashboardComponent implements OnInit {
     this.tc.editinfo(this.changeuserForm.value)
     .subscribe(
       data => {console.log("Success!!!",data);
-      this.router.navigate(['/authoritydashboard']);},
+      window.location.reload();
+      this.toastr.success("Succesfully Updated");
+    },
       error => {this.errorMsg=error.error;
         console.log(this.errorMsg);}
     )

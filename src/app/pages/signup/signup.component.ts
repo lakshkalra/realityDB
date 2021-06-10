@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { SignupService } from '../../services/signup.service';
 import { Signup } from '../../services/signup';
 import { Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-signup',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 export class SignupComponent implements OnInit {
 
   constructor(private signupservice: SignupService,
+    private toastr: ToastrService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -20,12 +22,13 @@ export class SignupComponent implements OnInit {
   
   onSubmit()
   {
-    console.log("HEllo");
     
     console.log(this.usermodel);
       this.signupservice.check(this.usermodel)
     .subscribe(
-      data => {console.log("Success!!!",data);},
+      data => {console.log("Success!!!",data);
+      this.toastr.success("Succesfully Signed up");
+    },
       error => {this.errorMsg=error.error;
                 this.router.navigate(['/Sign-Up']);}
     )

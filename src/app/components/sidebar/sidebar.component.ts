@@ -14,17 +14,19 @@ export class SidebarComponent implements OnInit {
   constructor(public auth: LoginService,private router: Router) { }
 usertype:boolean;
 user:any;
+name:"";
   ngOnInit(): void {
-    if(this.auth.type=="User"){
-      this.usertype=true;
-    }        
-    else if(this.auth.type=="Authority")
-    {
-      this.usertype=false;
-    }
     this.auth.getProfile().subscribe(
       data=>{
+        if(this.auth.type=="User"){
+          this.usertype=true;
+        }        
+        else if(this.auth.type=="Authority")
+        {
+          this.usertype=false;
+        }    
         this.user=data;
+        this.name=this.user.name;
       }
     )
 

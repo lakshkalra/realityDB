@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 
 
@@ -13,7 +14,11 @@ export class ForgotComponent implements OnInit {
 
   passbool = false;
   errorMsg = "";
-  constructor(private fb: FormBuilder, private login: LoginService, private router: Router) { }
+  successMsg="";
+  constructor(private fb: FormBuilder, 
+    private login: LoginService,
+    private toastr: ToastrService,
+    private router: Router) { }
 
   forgotuserForm = this.fb.group({
     email: ['', [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")]],
@@ -29,7 +34,9 @@ export class ForgotComponent implements OnInit {
 
     this.login.forgotemail(email)
       .subscribe(
-        data => { console.log("Success!!!", data); },
+        data => { 
+        this.successMsg="OTP Sent Successfully";
+      },
         error => { this.errorMsg = error.error; }
       )
   }
@@ -47,6 +54,7 @@ export class ForgotComponent implements OnInit {
       .subscribe(
         data => {
           console.log("Success!!!", data);
+      this.toastr.success("Password Changed Successfully");
           this.router.navigate(['/home']);
         },
         error => { this.errorMsg = error.error; }

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
 import { AppService } from 'src/app/services/app.service';
 @Component({
   selector: 'app-dashboard',
@@ -24,6 +25,7 @@ export class DashboardComponent implements OnInit {
     private fb: FormBuilder,
     private paymentservice: PaymentService,
     private authservice: LoginService,
+    private toastr: ToastrService,
     private router: Router) { }
   getClasses() {
     const classes = {
@@ -46,7 +48,6 @@ export class DashboardComponent implements OnInit {
       },
       error => {
         console.log("Error", error);
-
       }
     )
 
@@ -54,7 +55,6 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.getPaymentinfo().subscribe(
       data => {
         data.forEach(element => {
-          // console.log(element);
 
           if (element.account_type == "bank_account") {
             element.bank_account["fund_id"] = element.id;
@@ -106,6 +106,7 @@ export class DashboardComponent implements OnInit {
 
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
+      this.toastr.success("Money Added Successfully");
       },
       error => {
       }
@@ -119,6 +120,7 @@ export class DashboardComponent implements OnInit {
     this.sendamountdata.mode = "UPI";
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
+      this.toastr.success("Money Added Successfully");
       },
       error => {
         this.errorMsg=error.error;
@@ -133,6 +135,7 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.new(this.addnew).subscribe(
       data => {
         this.router.navigate(['/dashboard']);
+      this.toastr.success("Bank Account Added Successfully");
       },
       error => {
         this.errorMsg=error.error;
@@ -146,6 +149,7 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.new(this.addnew).subscribe(
       data => {
         this.router.navigate(['/dashboard']);
+      this.toastr.success("UPI Account Added Successfully");
       },
       error => {
         this.errorMsg=error.error;

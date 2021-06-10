@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AppService } from 'src/app/services/app.service';
 import {FormBuilder,Validators} from '@angular/forms';
 import { TablechangeService } from '../../services/tablechange.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-addpage',
   templateUrl: './addpage.component.html',
@@ -9,7 +10,10 @@ import { TablechangeService } from '../../services/tablechange.service';
 })
 export class AddpageComponent implements OnInit {
 
-  constructor(private appService: AppService,private fb: FormBuilder,private tc: TablechangeService) {}
+  constructor(private appService: AppService,
+    private fb: FormBuilder,
+    private toastr: ToastrService,
+    private tc: TablechangeService) {}
   getClasses() {
     const classes = {
       'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
@@ -38,7 +42,9 @@ export class AddpageComponent implements OnInit {
     
     this.tc.check(this.enrolluserForm.value)
     .subscribe(
-      data => {console.log("Success!!!",data);},
+      data => {
+      this.toastr.success("Succesfully Added");
+    },
       error => {this.errorMsg=error.error;
         console.log(this.errorMsg);}
     )
