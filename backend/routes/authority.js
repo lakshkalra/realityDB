@@ -9,7 +9,7 @@ const verify = require("./user_verification")
 //ADDING NEW CUSTOMER
 router.post("/auth/add", verify, async (req, res) => {
 
-    const { name, email, book_name, isbn, sales, royality, amount, withdrawal_amount } = req.body
+    const { name, email, book_name, isbn, sales, royality, amount } = req.body
 
     const isbn_exist = await Customer.findOne({ isbn })
 
@@ -22,8 +22,7 @@ router.post("/auth/add", verify, async (req, res) => {
             isbn,
             sales,
             royality,
-            amount,
-            withdrawal_amount
+            amount
         })
 
         try {
@@ -31,6 +30,7 @@ router.post("/auth/add", verify, async (req, res) => {
             res.json({ customer })
         } catch (err) {
             res.status(400).send(err);
+            console.log(err)
         }
 
 

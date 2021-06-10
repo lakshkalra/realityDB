@@ -18,6 +18,7 @@ const {
     user_login_validation
 } = require("../validation/user_validation");
 const customer = require("../model/customer");
+const { object } = require("joi");
 
 //USER REGIATRATION
 router.post("/register", async (req, res) => {
@@ -338,9 +339,13 @@ router.post('/razorfundid', verify, async (req, res) => {
         };
     }
     request(options, async (error, response) => {
-        if (error) return res.status(401).json(error);
+        if (error) return res.status(401).send(error);
+        // console.log(response.body)
 
         const obj = JSON.parse(response.body)
+
+        // console.log(Object.keys(obj))
+        if (Object.keys(obj) == 'error') return res.status(400).send(obj.error.description)
 
         const fund = await User.findOne({ name: user.name })
 
