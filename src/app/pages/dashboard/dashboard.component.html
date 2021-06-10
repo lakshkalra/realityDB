@@ -182,6 +182,9 @@
                             <div class="" mdbCollapse #test4="bs-collapse">
                               <p>Username: {{test.username}}</p>
                               <p>UPI Number: {{test.address}}</p>
+                              <div class="alert alert-danger" *ngIf="errorMsg">
+                                {{errorMsg}}
+                              </div>            
 
                               <form [formGroup]="amountupiForm" class="text-center">
 

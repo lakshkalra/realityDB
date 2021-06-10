@@ -3,6 +3,8 @@ import { AppService } from 'src/app/services/app.service';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../services/login.service';
+import { ToastrService } from 'ngx-toastr';
+
 
 
 @Component({
@@ -14,7 +16,11 @@ export class ProfileComponent implements OnInit {
   user: any;
   errorMsg = "";
 
-  constructor(private appService: AppService, private fb: FormBuilder, private auth: LoginService, private router: Router) { }
+  constructor(private appService: AppService,
+     private fb: FormBuilder
+    , private auth: LoginService,
+    private toastr: ToastrService,
+     private router: Router) { }
 
   closePopup() {
     document.getElementById('popup1').style.display = "none";
@@ -37,7 +43,7 @@ export class ProfileComponent implements OnInit {
   changeprofileForm = this.fb.group({
     name: ['', [Validators.required]],
     email: ['', [Validators.required]],
-    contact: ['', [Validators.required]]
+    contact: ['', [Validators.required,Validators.pattern("^[0-9]{10}$")]]
   });
 
 usertype:boolean;
@@ -70,7 +76,9 @@ usertype:boolean;
   onSubmit() {
     this.auth.changeinfouser(this.changeprofileForm.value)
       .subscribe(
-        data => { console.log("Success!!!", data); },
+        data => { console.log("Success!!!", data);
+      this.toastr.success("Your Profile Updated Successfully");
+       },
         error => { this.errorMsg = error.error; }
       )
   }

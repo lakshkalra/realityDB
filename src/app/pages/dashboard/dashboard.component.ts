@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PaymentService } from '../../services/payment.service';
 import { LoginService } from '../../services/login.service';
@@ -107,8 +107,10 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
       this.toastr.success("Money Added Successfully");
+      window.location.reload();
       },
       error => {
+        this.errorMsg=error.error;
       }
     )
 
@@ -121,6 +123,7 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
       this.toastr.success("Money Added Successfully");
+      window.location.reload();
       },
       error => {
         this.errorMsg=error.error;
@@ -134,8 +137,9 @@ export class DashboardComponent implements OnInit {
     this.addnew["account_type"] = "bank_account";
     this.paymentservice.new(this.addnew).subscribe(
       data => {
-        this.router.navigate(['/dashboard']);
       this.toastr.success("Bank Account Added Successfully");
+      window.location.reload();
+
       },
       error => {
         this.errorMsg=error.error;
@@ -148,8 +152,8 @@ export class DashboardComponent implements OnInit {
     this.addnew["account_type"] = "vpa";
     this.paymentservice.new(this.addnew).subscribe(
       data => {
-        this.router.navigate(['/dashboard']);
       this.toastr.success("UPI Account Added Successfully");
+      window.location.reload();
       },
       error => {
         this.errorMsg=error.error;

@@ -61,7 +61,8 @@
                               <div class="md-form md-outline">
                                 <input mdbInput type="tel" [class.is-invalid]="changeprofileForm.get('contact').invalid && changeprofileForm.get('contact').touched" formControlName="contact" id="form1" name="contact" class="form-control">
                                 <label for="form1" class="">Phone Number</label>
-                                <div *ngIf="changeprofileForm.get('contact').invalid && changeprofileForm.get('contact').touched" >
+                                <div *ngIf="changeprofileForm.get('contact').invalid && changeprofileForm.get('contact').touched" >  
+                                    <small class="text-danger" *ngIf="changeprofileForm.get('contact').errors?.pattern">Length must be 10 and numeric</small>
                                     <small class="text-danger" *ngIf="changeprofileForm.get('contact').errors?.required">This Field is required</small>
                                 </div>                   
                               </div>
