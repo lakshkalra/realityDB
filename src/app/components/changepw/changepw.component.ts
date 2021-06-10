@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder,Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Router } from '@angular/router';
 
@@ -11,24 +11,26 @@ import { Router } from '@angular/router';
 })
 export class ChangepwComponent implements OnInit {
 
-  constructor(private fb: FormBuilder,private auth: LoginService,private router: Router) { }
+  constructor(private fb: FormBuilder, private auth: LoginService, private router: Router) { }
   ngOnInit(): void {
-    }
-    errorMsg="";
+  }
+  errorMsg = "";
+  successMsg = "";
 
-    onSubmit()
-    {
-      this.auth.check(this.changepwForm.value)
+  onSubmit() {
+    this.auth.changepassword(this.changepwForm.value)
       .subscribe(
-        data => {console.log("Success!!!",data);
-        this.router.navigate(['/home']);},
-        error => {this.errorMsg=error.error;}
+        data => {
+          console.log("Success!!!", data);
+          this.successMsg = "Successfully updated";
+        },
+        error => { this.errorMsg = error.error; }
       )
-    }
+  }
 
   changepwForm = this.fb.group({
-    previous_password:['',[Validators.required]],
-    new_password:['',[Validators.required,Validators.pattern('(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:\{\\\}\\\[\\\]\\\|\\\+\\\-\\\=\\\_\\\)\\\(\\\)\\\`\\\/\\\\\\]])[A-Za-z0-9\d$@].{7,}')]]
+    previous_password: ['', [Validators.required]],
+    new_password: ['', [Validators.required, Validators.pattern('(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!#^~%*?&,.<>"\'\\;:\{\\\}\\\[\\\]\\\|\\\+\\\-\\\=\\\_\\\)\\\(\\\)\\\`\\\/\\\\\\]])[A-Za-z0-9\d$@].{7,}')]]
   });
 
 }

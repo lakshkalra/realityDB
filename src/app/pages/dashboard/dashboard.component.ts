@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
     fund_id: "",
     mode: ""
   }
-  errorMsg="";
+  errorMsg = "";
   addnew = {};
 
   constructor(private appService: AppService,
@@ -106,8 +106,12 @@ export class DashboardComponent implements OnInit {
 
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
+<<<<<<< HEAD
       this.toastr.success("Money Added Successfully");
       window.location.reload();
+=======
+        this.toastr.success("Money Added Successfully");
+>>>>>>> 8531ff5a98e2bed7763ee79a74400aae94c0c39c
       },
       error => {
         this.errorMsg=error.error;
@@ -122,11 +126,16 @@ export class DashboardComponent implements OnInit {
     this.sendamountdata.mode = "UPI";
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
+<<<<<<< HEAD
       this.toastr.success("Money Added Successfully");
       window.location.reload();
+=======
+        this.toastr.success("Money Added Successfully");
+>>>>>>> 8531ff5a98e2bed7763ee79a74400aae94c0c39c
       },
       error => {
-        this.errorMsg=error.error;
+        this.errorMsg = error.error;
+        console.log(error.error)
       }
     )
   }
@@ -137,12 +146,17 @@ export class DashboardComponent implements OnInit {
     this.addnew["account_type"] = "bank_account";
     this.paymentservice.new(this.addnew).subscribe(
       data => {
+<<<<<<< HEAD
       this.toastr.success("Bank Account Added Successfully");
       window.location.reload();
 
+=======
+        this.router.navigate(['/dashboard']);
+        this.toastr.success("Bank Account Added Successfully");
+>>>>>>> 8531ff5a98e2bed7763ee79a74400aae94c0c39c
       },
       error => {
-        this.errorMsg=error.error;
+        this.errorMsg = error.error;
       }
     )
   }
@@ -152,11 +166,16 @@ export class DashboardComponent implements OnInit {
     this.addnew["account_type"] = "vpa";
     this.paymentservice.new(this.addnew).subscribe(
       data => {
+<<<<<<< HEAD
       this.toastr.success("UPI Account Added Successfully");
       window.location.reload();
+=======
+        this.router.navigate(['/dashboard']);
+        this.toastr.success("UPI Account Added Successfully");
+>>>>>>> 8531ff5a98e2bed7763ee79a74400aae94c0c39c
       },
       error => {
-        this.errorMsg=error.error;
+        this.errorMsg = error.error;
       }
     )
   }
