@@ -18,7 +18,7 @@ export class DashboardComponent implements OnInit {
     fund_id: "",
     mode: ""
   }
-  errorMsg="";
+  errorMsg = "";
   addnew = {};
 
   constructor(private appService: AppService,
@@ -106,7 +106,7 @@ export class DashboardComponent implements OnInit {
 
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
-      this.toastr.success("Money Added Successfully");
+        this.toastr.success("Money Added Successfully");
       },
       error => {
       }
@@ -120,10 +120,11 @@ export class DashboardComponent implements OnInit {
     this.sendamountdata.mode = "UPI";
     this.paymentservice.existing(this.sendamountdata).subscribe(
       data => {
-      this.toastr.success("Money Added Successfully");
+        this.toastr.success("Money Added Successfully");
       },
       error => {
-        this.errorMsg=error.error;
+        this.errorMsg = error.error;
+        console.log(error.error)
       }
     )
   }
@@ -135,10 +136,10 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.new(this.addnew).subscribe(
       data => {
         this.router.navigate(['/dashboard']);
-      this.toastr.success("Bank Account Added Successfully");
+        this.toastr.success("Bank Account Added Successfully");
       },
       error => {
-        this.errorMsg=error.error;
+        this.errorMsg = error.error;
       }
     )
   }
@@ -149,10 +150,10 @@ export class DashboardComponent implements OnInit {
     this.paymentservice.new(this.addnew).subscribe(
       data => {
         this.router.navigate(['/dashboard']);
-      this.toastr.success("UPI Account Added Successfully");
+        this.toastr.success("UPI Account Added Successfully");
       },
       error => {
-        this.errorMsg=error.error;
+        this.errorMsg = error.error;
       }
     )
   }

@@ -240,7 +240,7 @@ router.post('/changepass', verify, async (req, res) => {
     var decoded = jwt_decode(token)
 
     await User.findById(decoded._id, async (err, result) => {
-        if (err) return res.status(400).json(err)
+        if (err) return res.status(400).send(err)
 
 
         const valid_pass = await bcrypt.compare(previous_password, result.password);
@@ -253,7 +253,7 @@ router.post('/changepass', verify, async (req, res) => {
         const hashed_pass = await bcrypt.hash(new_password, salt);
 
         await User.findByIdAndUpdate(decoded._id, { password: hashed_pass }, (err, success) => {
-            if (err) return res.status(400).json(err)
+            if (err) return res.status(400).send(err)
 
             res.status(200).json({ msg: "successfully updated" })
         })
@@ -293,7 +293,7 @@ router.post('/razorfundid', verify, async (req, res) => {
         if (!account_number || !name || !ifsc) {
             return res.status(400).json({ msg: "Invalid information! can not proceed further" })
         }
-        TODO//
+
         //CONFIRMING THAT USER IS NOT MAKING A DUPLICATE FUNDID WITH SAME ACCOUNT NUMBER
         for (i in user.razorpay.funds) {
             console.log('i' + "    " + i + "   " + (user.razorpay.funds[i]))
@@ -362,7 +362,7 @@ router.post('/razorpayout', verify, async (req, res) => {
 
     const { fund_id, amount, mode } = req.body
     const Amount = parseInt(amount)
-    console.log(typeof (Amount))
+    console.log(Amount)
 
     if (!fund_id || !amount) return res.status(400).json({ msg: "Invalid information! can not proceed further" })
 
