@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-landing',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing.component.scss']
 })
 export class LandingComponent implements OnInit {
-  constructor() { }
+  constructor(private auth: LoginService) { }
   closePopup()
   {
     document.getElementById('popup1').style.display="none";
@@ -17,6 +18,6 @@ export class LandingComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
+    this.auth.logout();     
   }
 }

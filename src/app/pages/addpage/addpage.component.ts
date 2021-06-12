@@ -3,6 +3,7 @@ import { AppService } from 'src/app/services/app.service';
 import {FormBuilder,Validators} from '@angular/forms';
 import { TablechangeService } from '../../services/tablechange.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-addpage',
   templateUrl: './addpage.component.html',
@@ -13,7 +14,8 @@ export class AddpageComponent implements OnInit {
   constructor(private appService: AppService,
     private fb: FormBuilder,
     private toastr: ToastrService,
-    private tc: TablechangeService) {}
+    private tc: TablechangeService,
+    private router: Router) {}
   getClasses() {
     const classes = {
       'pinned-sidebar': this.appService.getSidebarStat().isSidebarPinned,
@@ -44,6 +46,7 @@ export class AddpageComponent implements OnInit {
     .subscribe(
       data => {
       this.toastr.success("Succesfully Added");
+      this.router.navigate(['/authdashboard']);
     },
       error => {this.errorMsg=error.error;
         console.log(this.errorMsg);}

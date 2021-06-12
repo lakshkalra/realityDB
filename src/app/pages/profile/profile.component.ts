@@ -78,6 +78,7 @@ usertype:boolean;
       .subscribe(
         data => { console.log("Success!!!", data);
       this.toastr.success("Your Profile Updated Successfully");
+      window.location.reload();
        },
         error => { this.errorMsg = error.error; }
       )
