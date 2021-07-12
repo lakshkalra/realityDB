@@ -37,7 +37,8 @@ export class DashboardComponent implements OnInit {
   toggleSidebar() {
     this.appService.toggleSidebar();
   }
-
+ 
+  transbool=true;
 
   ngOnInit() {
 
@@ -45,6 +46,9 @@ export class DashboardComponent implements OnInit {
     this.authservice.getProfile().subscribe(
       data => {
         this.users = data;
+        if(this.users.customer[0].amount<=200){
+        this.transbool=false;
+      }
       },
       error => {
         console.log("Error", error);

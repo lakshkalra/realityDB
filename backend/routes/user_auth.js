@@ -207,7 +207,6 @@ router.get('/myprofile', verify, async (req, res) => {
         await Customer.find({ email: result.email }, (err, success) => {
             if (err) return res.status(400).json(err)
 
-            // if (!cus) return res.send("not doumnf")
             res.status(200).json({
                 name: result.name,
                 contact: result.contact,

@@ -32,7 +32,6 @@ const customerSchema = new mongoose.Schema({
     withdrawal_amount: {
         type: Number,
         default: 0
-
     },
     date: {
         type: Date,
